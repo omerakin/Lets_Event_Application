@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         String omer = "";
         String yusuf = "Hadi yusuf hadiii";
-        // yettim geldim
+        // yetttim geldim
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
