@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabHost.TabSpec eventActivity = tabHost.newTabSpec("Event");
         eventActivity.setIndicator("EVENT");
-        eventActivity.setContent( new Intent(this, EventsActivity.class));
+        eventActivity.setContent(new Intent(this, EventsActivity.class));
 
         TabHost.TabSpec activitiesActivity = tabHost.newTabSpec("Activities");
         activitiesActivity.setIndicator("ACTIVITIES");
@@ -56,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
         tabHost.addTab(eventActivity);
         tabHost.addTab(activitiesActivity);
         tabHost.addTab(profileActivity);
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.profile_pic);
+
+        tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.profile_pic);
+
+        tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.profile_pic);
+
+        tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.profile_pic);
 
     }
 
