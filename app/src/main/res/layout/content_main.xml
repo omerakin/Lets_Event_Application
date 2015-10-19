@@ -31,25 +31,25 @@
                 android:layout_weight="1">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout"
+                    android:id="@+id/MAP"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout2"
+                    android:id="@+id/EVENT"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout3"
+                    android:id="@+id/ACTIVITIES"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/linearLayout4"
+                    android:id="@+id/PROFILE"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
