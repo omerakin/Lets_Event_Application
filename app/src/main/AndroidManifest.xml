@@ -53,6 +53,10 @@
         </activity>
         <activity android:name=".Event_Private_Activity" >
         </activity>
+        <activity android:name=".Activities_Followed_Activity" >
+        </activity>
+        <activity android:name=".Activities_You_Activity" >
+        </activity>
     </application>
 
 </manifest>

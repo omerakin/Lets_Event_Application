@@ -38,13 +38,13 @@
                 android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/FollowedFriendsActivities"
+                    android:id="@+id/Followed"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/MyActivities"
+                    android:id="@+id/You"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"></LinearLayout>
