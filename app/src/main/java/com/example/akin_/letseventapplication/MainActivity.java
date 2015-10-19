@@ -2,6 +2,7 @@ package com.example.akin_.letseventapplication;
 
 import android.app.LocalActivityManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.widget.TabHost;
 //asdf
 public class MainActivity extends AppCompatActivity {
 
+    TabHost tabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+        tabHost = (TabHost) findViewById(R.id.tabHost);
         LocalActivityManager mLocalActivityManager = new LocalActivityManager(this, false);
         mLocalActivityManager.dispatchCreate(savedInstanceState);
         tabHost.setup(mLocalActivityManager);
@@ -56,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
         tabHost.addTab(eventActivity);
         tabHost.addTab(activitiesActivity);
         tabHost.addTab(profileActivity);
-        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.profile_pic);
+
+
+      /*  tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.profile_pic);
 
         tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.profile_pic);
 
@@ -64,7 +68,30 @@ public class MainActivity extends AppCompatActivity {
 
         tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.profile_pic);
 
+*/
+        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
+        {
+            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLUE);
+        }
+        tabHost.getTabWidget().setCurrentTab(1);
+        tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.profile_pic);
+
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
+                {
+                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLUE);
+                }
+
+                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.profile_pic);
+            }
+        });
+
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
