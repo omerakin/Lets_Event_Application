@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         {
             tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLUE);
         }
-        tabHost.getTabWidget().setCurrentTab(1);
-        tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.profile_pic);
+        tabHost.getTabWidget().setCurrentTab(0);
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.profile_pic);
 
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
