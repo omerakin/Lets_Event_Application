@@ -30,19 +30,19 @@ public class MainActivity extends AppCompatActivity {
         tabHost.setup(mLocalActivityManager);
 
         TabHost.TabSpec mapActivity = tabHost.newTabSpec("Map");
-        mapActivity.setIndicator("MAP");
+        mapActivity.setIndicator("");
         mapActivity.setContent(new Intent(this, MapActivity.class));
 
         TabHost.TabSpec eventActivity = tabHost.newTabSpec("Event");
-        eventActivity.setIndicator("EVENT");
+        eventActivity.setIndicator("");
         eventActivity.setContent(new Intent(this, EventsActivity.class));
 
         TabHost.TabSpec activitiesActivity = tabHost.newTabSpec("Activities");
-        activitiesActivity.setIndicator("ACTIVITIES");
-        activitiesActivity.setContent( new Intent(this, ActivitiesActivity.class));
+        activitiesActivity.setIndicator("");
+        activitiesActivity.setContent(new Intent(this, ActivitiesActivity.class));
 
         TabHost.TabSpec profileActivity = tabHost.newTabSpec("Profile");
-        profileActivity.setIndicator("PROFILE");
+        profileActivity.setIndicator("");
         profileActivity.setContent(new Intent(this, ProfileActivity.class));
 
         tabHost.addTab(mapActivity);
@@ -51,32 +51,33 @@ public class MainActivity extends AppCompatActivity {
         tabHost.addTab(profileActivity);
 
 
-      /*  tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.profile_pic);
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_gray);
+        tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_gray);
+        tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_activities_gray);
+        tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_profile_gray);
 
-        tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.profile_pic);
-
-        tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.profile_pic);
-
-        tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.profile_pic);
-
-*/
-        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-        {
-            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLUE);
-        }
         tabHost.getTabWidget().setCurrentTab(0);
-        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.profile_pic);
-
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_white);
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-                {
-                    tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.BLUE);
+
+                tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_gray);
+                tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_gray);
+                tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_activities_gray);
+                tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_profile_gray);
+
+                if(tabHost.getCurrentTab()==0){
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_map_white);
+                }else if (tabHost.getCurrentTab()==1){
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_events_white);
+                }else if (tabHost.getCurrentTab()==2){
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_activities_white);
+                }else {
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_profile_white);
                 }
 
-                tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.profile_pic);
             }
         });
 
