@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 
-//asdf
+
 public class MainActivity extends AppCompatActivity {
 
     TabHost tabHost;
