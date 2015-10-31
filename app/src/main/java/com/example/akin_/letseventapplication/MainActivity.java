@@ -18,7 +18,7 @@ import com.parse.ParseObject;
 
 
 public class MainActivity extends AppCompatActivity {
-//yusuffff
+
     TabHost tabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
