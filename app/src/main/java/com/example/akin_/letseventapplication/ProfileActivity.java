@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class ProfileActivity extends AppCompatActivity {
 //comment
+    //alındı
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
