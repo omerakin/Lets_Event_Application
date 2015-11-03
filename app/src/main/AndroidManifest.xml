@@ -59,6 +59,12 @@
         </activity>
         <activity android:name=".Activities_You_Activity" >
         </activity>
+        <activity android:name=".Profile_MyEvents_Activity" >
+        </activity>
+        <activity android:name=".Profile_PastEvents_Activity" >
+        </activity>
+        <activity android:name=".Profile_EventsToAttend_Activity" >
+        </activity>
     </application>
 
 </manifest>

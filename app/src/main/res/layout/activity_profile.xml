@@ -39,13 +39,18 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/Followed"
+                android:id="@+id/MyEvents"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"></LinearLayout>
 
             <LinearLayout
-                android:id="@+id/You"
+                android:id="@+id/EventsToAttend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"></LinearLayout>
+            <LinearLayout
+                android:id="@+id/PastEvents"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"></LinearLayout>
