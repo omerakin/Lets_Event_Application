@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences.Editor loginEditor;
     private Boolean saveLogin;
     public  boolean isPasswordSameAsParse;
+    public String passwordFromParse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,52 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setText(login.getString("password", ""));
             checkBox.setChecked(true);
         }
+
+
+
+
+
     }
 
+    private void afterQueryProcessing(String usernameET, String passwordET) {
+        // You can access m2Status here reliably,
+        // assuming you only call this method
+        // as shown above, but you should still
+        // use defensive programming
+        if(passwordET.equals(passwordFromParse)){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("Username", usernameET);
+            intent.putExtra("Password", passwordET);
+            startActivity(intent);
+        } else {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Incorrect Email or Password!").setNeutralButton("Close", null).show();
+        }
 
+    }
+
+    private void runQuery(final String usernameET, final String passwordET) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
+        query.whereEqualTo("Email", usernameET);
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (object == null) {
+                    Log.d("score", "The getFirst request failed.");
+                    afterQueryProcessing("", "");
+                    // You don't have a good value to use, so figure
+                    // out a way to handle that scenario
+                } else {
+                    Log.d("id", "Retrieved the object.");
+                    String status = object.getString("Password");
+                    passwordFromParse = object.getString("Password");
+                    System.out.println("Hospital: " + status);
+                    System.out.println(status + passwordFromParse);
+                    // You have a good value to use, so
+                    // now you can actually use it
+                    afterQueryProcessing(usernameET, passwordET);
+                }
+            }
+        });
+    }
     public void onLogin(View view) {
 
         final String usernameET = String.valueOf(etUsername.getText());
@@ -65,38 +109,8 @@ public class LoginActivity extends AppCompatActivity {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please enter valid username and password!").setNeutralButton("Close", null).show();
         } else {
 
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
-            query.whereEqualTo("Email", usernameET);
-            query.getFirstInBackground(new GetCallback<ParseObject>() {
-                public void done(ParseObject parseObject, ParseException e) {
-                    if (parseObject == null) {
-                        Log.d("Email", "The getFirst request failed.");
-                    } else {
-                        String passwordFromParse = parseObject.getString("Password");
-                        if (passwordET.equals(passwordFromParse)) {
-                            if (checkBox.isChecked()) {
-                                loginEditor.putBoolean("saveLogin", true);
-                                loginEditor.putString("username", usernameET);
-                                loginEditor.putString("password", passwordET);
-                                loginEditor.commit();
-                            } else {
-                                loginEditor.clear();
-                                loginEditor.commit();
-                            }
-                            isPasswordSameAsParse = true;
-                        }
-                    }
-                }
-            });
+            runQuery(usernameET, passwordET);
 
-            if(isPasswordSameAsParse){
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.putExtra("Username", usernameET);
-                intent.putExtra("Password", passwordET);
-                startActivity(intent);
-            } else {
-                new AlertDialog.Builder(this).setTitle("Warning").setMessage("Incorrect Email or Password!").setNeutralButton("Close", null).show();
-            }
 
 
 
