@@ -74,7 +74,7 @@
                 android:textColor="#00ffff"
                 android:textSize="20sp"
                 android:background="#80000000"
-                android:onClick="onLogin" />
+                android:onClick="onSignup" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
