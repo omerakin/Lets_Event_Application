@@ -22,9 +22,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
-                android:id="@+id/usernameET"
+                android:id="@+id/email"
                 android:layout_gravity="center_horizontal"
-                android:hint="Username"
+                android:hint="E-mail"
                 android:background="#80000000"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff" />
@@ -40,33 +40,50 @@
                 android:layout_marginTop="15sp"
                 android:textColorHint="#ffffff"
                 android:textColor="#ffffff" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remember me"
-                android:id="@+id/remenberMe"
-                android:textColor="#ffffff" />
-
-            <Button
+            <EditText
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="LOGIN"
-                android:id="@+id/button"
-                android:textColor="#00ffff"
-                android:textSize="20sp"
+                android:layout_height="50sp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/confirmpasswordET"
+                android:hint="Confirm Password"
                 android:background="#80000000"
-                android:onClick="onLogin" />
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="OR"
-                android:textSize="20sp"
+                android:layout_marginTop="15sp"
+                android:textColorHint="#ffffff"
+                android:textColor="#ffffff" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:id="@+id/name"
+                android:layout_gravity="center_horizontal"
+                android:hint="Name"
+                android:background="#80000000"
                 android:textColor="#ffffff"
-                android:gravity="center"
-                android:padding="10dp"
-                />
+                android:textColorHint="#ffffff"
+                android:layout_marginTop="15sp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:id="@+id/surname"
+                android:layout_gravity="center_horizontal"
+                android:hint="Surname"
+                android:background="#80000000"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:layout_marginTop="15sp"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:id="@+id/phone"
+                android:layout_gravity="center_horizontal"
+                android:hint="Phone Number"
+                android:background="#80000000"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:layout_marginTop="15sp"/>
+
             <Button
+                android:padding="10sp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="SIGN UP"
@@ -74,7 +91,8 @@
                 android:textColor="#00ffff"
                 android:textSize="20sp"
                 android:background="#80000000"
-                android:onClick="onLogin" />
+                android:onClick="onLogin"
+                android:layout_marginTop="15sp"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
