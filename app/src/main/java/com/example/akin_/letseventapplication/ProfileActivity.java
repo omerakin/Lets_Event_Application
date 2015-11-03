@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         TextView myEventsTextView = (TextView) tabHost3.getTabWidget().getChildAt(0).findViewById(android.R.id.title);
         myEventsTextView.setTextSize(10);
         TextView EventsToAttendTextView = (TextView) tabHost3.getTabWidget().getChildAt(1).findViewById(android.R.id.title);
-        EventsToAttendTextView.setTextSize(10);
+        EventsToAttendTextView.setTextSize(9);
         TextView pastEventsTextView = (TextView) tabHost3.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
         pastEventsTextView.setTextSize(10);
     }
