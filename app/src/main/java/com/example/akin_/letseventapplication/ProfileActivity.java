@@ -43,4 +43,8 @@ public class ProfileActivity extends AppCompatActivity {
         TextView pastEventsTextView = (TextView) tabHost3.getTabWidget().getChildAt(2).findViewById(android.R.id.title);
         pastEventsTextView.setTextSize(10);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

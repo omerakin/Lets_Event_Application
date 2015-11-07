@@ -29,4 +29,8 @@ public class ActivitiesActivity extends AppCompatActivity {
         tabHost3.addTab(activities_Followed_Activity);
         tabHost3.addTab(activities_You_Activity);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

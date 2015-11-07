@@ -10,4 +10,8 @@ public class Profile_FutureEvents_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile__future_events_);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

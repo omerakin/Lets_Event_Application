@@ -10,4 +10,8 @@ public class Activities_You_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activities__you_);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

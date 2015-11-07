@@ -35,4 +35,8 @@ public class EventsActivity extends AppCompatActivity {
         tabHost2.addTab(event_Friends_Activity);
         tabHost2.addTab(event_Private_Activity);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

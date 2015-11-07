@@ -10,4 +10,8 @@ public class Event_Public_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event__public_);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

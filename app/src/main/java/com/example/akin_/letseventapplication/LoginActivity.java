@@ -9,14 +9,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
+import android.widget.TextView;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -30,10 +35,46 @@ public class LoginActivity extends AppCompatActivity {
     public  boolean isPasswordSameAsParse;
     public String passwordFromParse;
 
+    private CallbackManager callbackManager;
+    private TextView info;
+    private LoginButton loginButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
+
+        //Face
+        callbackManager = CallbackManager.Factory.create();
+        info = (TextView)findViewById(R.id.info);
+        loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                info.setText("User ID:  " +
+                        loginResult.getAccessToken().getUserId() + "\n" +
+                        "Auth Token: " + loginResult.getAccessToken().getToken());
+
+
+                //Add parse.com
+                //...
+
+
+                Intent intent = new Intent(LoginActivity.this ,MainActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancel() {
+                info.setText("Login attempt cancelled.");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                info.setText("Login attempt failed.");
+            }
+        });
 
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
@@ -51,11 +92,11 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setText(login.getString("password", ""));
             checkBox.setChecked(true);
         }
+    }
 
-
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void afterQueryProcessing(String usernameET, String passwordET) {
@@ -97,6 +138,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     public void onLogin(View view) {
 
         final String usernameET = String.valueOf(etUsername.getText());
@@ -108,19 +150,13 @@ public class LoginActivity extends AppCompatActivity {
         {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please enter valid username and password!").setNeutralButton("Close", null).show();
         } else {
-
             runQuery(usernameET, passwordET);
-
-
-
-
         }
     }
 
     public void onSignup (View view) {
-
         Intent intent = new Intent(this,SignUpActivity.class);
         startActivity(intent);
-
     }
+
 }

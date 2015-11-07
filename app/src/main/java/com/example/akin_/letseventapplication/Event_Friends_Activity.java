@@ -10,4 +10,8 @@ public class Event_Friends_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event__friends_);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
