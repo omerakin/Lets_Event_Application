@@ -10,10 +10,15 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.FindCallback;
@@ -47,22 +52,49 @@ public class LoginActivity extends AppCompatActivity {
 
         //Face
         callbackManager = CallbackManager.Factory.create();
+
+
+
+
         info = (TextView)findViewById(R.id.info);
+
         loginButton = (LoginButton)findViewById(R.id.login_button);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                info.setText("User ID:  " +
+              /*  info.setText("User ID:  " +
                         loginResult.getAccessToken().getUserId() + "\n" +
-                        "Auth Token: " + loginResult.getAccessToken().getToken());
-
+                        "Auth Token: " + loginResult.getAccessToken().getToken());*/
+                String logtoken = loginResult.getAccessToken().getToken();
 
                 //Add parse.com
                 //...
 
 
                 Intent intent = new Intent(LoginActivity.this ,MainActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
+
+
+
+                Bundle params = new Bundle();
+               // params.putString("type", "event");
+               // params.putString("q", "sarıyer");
+              //  params.putString("fields", "email");
+                params.putString("fields", "first_name, last_name, email");
+                //params.putString("fields", "last_name");
+            /* make the API call */
+                new GraphRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        "/me",
+                        params,
+                        HttpMethod.GET,
+                        new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
+            /* handle the result */
+                                info.setText(response.toString());
+                            }
+                        }
+                ).executeAsync();
             }
 
             @Override
