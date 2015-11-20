@@ -29,8 +29,6 @@ public class SignUpActivity extends AppCompatActivity {
         confirmpassword = (EditText) findViewById(R.id.confirmpassword);
         name = (EditText) findViewById(R.id.name);
         surname = (EditText) findViewById(R.id.surname);
-        phoneNumber = (EditText) findViewById(R.id.phoneNumber);
-
     }
 
     public void onRealSignup (View view) {
