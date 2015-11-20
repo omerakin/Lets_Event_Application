@@ -21,7 +21,7 @@ public class Event_Public_Activity extends AppCompatActivity {
          params.putString("type", "event");
          params.putString("q", "sarıyer");
         //  params.putString("fields", "email");
-       // params.putString("fields", "first_name, last_name, email");
+       // params.putString ("fields", "first_name, last_name, email");
         //params.putString("fields", "last_name");
             /* make the API call */
         new GraphRequest(
