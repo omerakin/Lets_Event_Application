@@ -9,6 +9,10 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Event_Public_Activity extends AppCompatActivity {
     TextView info2;
     @Override
@@ -32,7 +36,21 @@ public class Event_Public_Activity extends AppCompatActivity {
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
             /* handle the result */
-                        info2.setText(info2.getText() + response.toString());
+                       // info2.setText(info2.getText() + response.toString());
+                        JSONObject obj = response.getJSONObject();
+                        JSONArray arr;
+                        JSONObject oneByOne;
+
+                        try{
+                        arr = obj.getJSONArray("data");
+                            oneByOne = arr.getJSONObject(1);
+                            info2.setText( oneByOne.optString("description"));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+
                     }
                 }
         ).executeAsync();
