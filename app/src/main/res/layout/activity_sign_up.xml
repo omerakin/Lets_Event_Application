@@ -71,16 +71,6 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 android:layout_marginTop="15sp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:id="@+id/phoneNumber"
-                android:layout_gravity="center_horizontal"
-                android:hint="Phone Number"
-                android:background="#80000000"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:layout_marginTop="15sp"/>
 
             <Button
                 android:padding="10sp"
@@ -92,7 +82,7 @@
                 android:textSize="20sp"
                 android:background="#80000000"
                 android:onClick="onRealSignup"
-                android:layout_marginTop="15sp"/>
+                android:layout_marginTop="25sp"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -50,7 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
         testAccount.put("Password", passwordET);
         testAccount.put("Name", nameET);
         testAccount.put("Surname", surnameET);
-        testAccount.put("Phone_number", phoneNumberET);
         testAccount.saveInBackground();
 
         Intent intent = new Intent(this,MainActivity.class);
