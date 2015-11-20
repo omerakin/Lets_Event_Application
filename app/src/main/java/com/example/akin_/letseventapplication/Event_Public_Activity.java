@@ -44,6 +44,7 @@ public class Event_Public_Activity extends AppCompatActivity {
                         try{
                         arr = obj.getJSONArray("data");
                             oneByOne = arr.getJSONObject(1);
+
                             info2.setText( oneByOne.optString("description"));
 
                     } catch (JSONException e) {
