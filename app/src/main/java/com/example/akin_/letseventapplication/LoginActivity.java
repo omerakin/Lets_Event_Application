@@ -53,8 +53,11 @@ public class LoginActivity extends AppCompatActivity {
         //Face
         callbackManager = CallbackManager.Factory.create();
 
-
-
+        boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
+        if(loggedIn) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
 
         info = (TextView)findViewById(R.id.info);
 
@@ -124,6 +127,9 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setText(login.getString("password", ""));
             checkBox.setChecked(true);
         }
+
+
+
     }
 
     @Override
