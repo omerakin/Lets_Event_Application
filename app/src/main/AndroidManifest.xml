@@ -35,15 +35,17 @@
             android:value="@string/google_maps_key" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
-        <provider android:authorities=
-            "com.facebook.app.FacebookContentProvider1707175919518560"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
             android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider1707175919518560"
             android:exported="true" />
 
         <activity
@@ -80,6 +82,8 @@
         <activity android:name=".Profile_FutureEvents_Activity" >
         </activity>
         <activity android:name=".SignUpActivity" >
+        </activity>
+        <activity android:name=".AddEventActivity" >
         </activity>
     </application>
 
