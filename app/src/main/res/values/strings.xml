@@ -6,4 +6,7 @@
     <string name="title_activity_activities">ActivitiesActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="facebook_app_id">1707175919518560</string>
+    <string name="title_activity_event__information_">Event_Information_Activity</string>
+
+
 </resources>

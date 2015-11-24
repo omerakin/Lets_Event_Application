@@ -2,6 +2,8 @@ package com.example.akin_.letseventapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -13,12 +15,32 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Event_Public_Activity extends AppCompatActivity {
     TextView info2;
+    int arrayLength = 0;
+    // Array of strings storing country names
+    String[] eventNames ;
+
+    // Array of integers points to images stored in /res/drawable-ldpi/
+    int[] eventPictures ;
+
+    // Array of strings to store currencies
+    String[] eventDates ;
+    String[] eventLocation ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event__public_);
+
+
+
+
+
+
 
         info2 = (TextView)findViewById(R.id.info2);
         Bundle params = new Bundle();
@@ -36,25 +58,72 @@ public class Event_Public_Activity extends AppCompatActivity {
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
             /* handle the result */
-                       // info2.setText(info2.getText() + response.toString());
+                    //    info2.setText(info2.getText() + response.toString());
                         JSONObject obj = response.getJSONObject();
                         JSONArray arr;
                         JSONObject oneByOne;
+                        JSONObject oneByOneChild;
 
                         try{
                         arr = obj.getJSONArray("data");
-                            oneByOne = arr.getJSONObject(1);
+                            arrayLength = arr.length();
+                            oneByOne = arr.getJSONObject(0);
+                          //  info2.setText( arr.length() + "   "+ oneByOne.optString("name"));
 
-                            info2.setText( oneByOne.optString("description"));
+                            eventNames = new String[arrayLength];
+                            eventDates = new String[arrayLength];
+                            eventPictures = new int[arrayLength];
+                            eventLocation = new String[arrayLength];
+
+                            for (int i=0; i<arrayLength; i++){
+                                oneByOne = arr.getJSONObject(i);
+                                eventNames[i]= oneByOne.optString("name");
+                                eventDates[i] = oneByOne.optString("start_time");
+                                eventPictures[i] = R.drawable.profile_pic;
+                                oneByOneChild = oneByOne.getJSONObject("place");
+                                eventLocation[i] = oneByOneChild.optString("name");
+                            }
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
 
                     }
+                        // Each row in the list stores country name, currency and flag
+                        List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
+
+                        for(int i=0;i<arrayLength;i++){
+                            HashMap<String, String> hm = new HashMap<String,String>();
+                            hm.put("txt", "Name : " + eventNames[i]);
+                            hm.put("cur","Date : " + eventDates[i]);
+                            hm.put("flag", Integer.toString(eventPictures[i]) );
+                            hm.put("pla", "Location : " + eventLocation[i]);
+                            aList.add(hm);
+                        }
+
+                        // Keys used in Hashmap
+                        String[] from = { "flag","txt","cur", "pla" };
+
+                        // Ids of views in listview_layout
+                        int[] to = { R.id.flag,R.id.txt,R.id.cur, R.id.pla};
+
+                        // Instantiating an adapter to store each items
+                        // R.layout.listview_layout defines the layout of each item
+                        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
+
+                        // Getting a reference to listview of main.xml layout file
+                        ListView listView = (ListView) findViewById(R.id.listView);
+
+                        // Setting the adapter to the listView
+                        listView.setAdapter(adapter);
 
                     }
                 }
         ).executeAsync();
+
+
+
+
     }
 
 
