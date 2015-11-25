@@ -7,6 +7,40 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="facebook_app_id">1707175919518560</string>
     <string name="title_activity_event__information_">Event_Information_Activity</string>
+    <string-array name="category_names">
+
+        <item>Select a type</item>
+        <item>Concerts - Tour Dates</item>
+        <item>Conferences - Tradeshows</item>
+        <item>Comedy Events</item>
+        <item>Education</item>
+        <item>Kids - Family</item>
+        <item>Festivals</item>
+        <item>Film</item>
+        <item>Food - Wine</item>
+        <item>Fundraising - Charity</item>
+        <item>Art Galleries - Exhibits</item>
+        <item>Health - Wellness</item>
+        <item>Holiday Events</item>
+        <item>Literary - Books</item>
+        <item>Museums - Attractions</item>
+        <item>Neighborhood</item>
+        <item>Business - Networking</item>
+        <item>Nightlife - Singles</item>
+        <item>University - Alumni</item>
+        <item>Organizations - Meetups</item>
+        <item>Outdoors - Recreation</item>
+        <item>Performing Arts</item>
+        <item>Pets</item>
+        <item>Politics - Activism</item>
+        <item>Sales - Retail</item>
+        <item>Science</item>
+        <item>Religion - Spirituality</item>
+        <item>Sports</item>
+        <item>Technology</item>
+        <item>Other - Miscellaneous</item>
+
+    </string-array>
 
 
 </resources>

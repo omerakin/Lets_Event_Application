@@ -64,6 +64,7 @@
                 android:textColorHint="#ffffff" />
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -144,6 +145,28 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Category         "
+                android:id="@+id/Category"
+                android:textColor="#ffffff"/>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/category"
+                android:background="#80000000"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -160,7 +183,7 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="125sp"
+                android:layout_height="75sp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/description"
                 android:hint="Tell people more about the event"

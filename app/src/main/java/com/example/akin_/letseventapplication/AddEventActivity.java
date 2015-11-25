@@ -3,11 +3,15 @@ package com.example.akin_.letseventapplication;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -27,6 +31,8 @@ public class AddEventActivity extends AppCompatActivity {
     private EditText End_Time;
     private EditText description;
     final Calendar calendar = Calendar.getInstance();
+    Spinner spinner;
+    ArrayAdapter<CharSequence> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,11 @@ public class AddEventActivity extends AppCompatActivity {
         End_Date = (EditText) findViewById(R.id.End_Date);
         End_Time = (EditText) findViewById(R.id.End_Time);
         description = (EditText) findViewById(R.id.description);
+
+        //spinner
+        spinner = (Spinner) findViewById(R.id.category);
+        arrayAdapter = ArrayAdapter.createFromResource(this, R.array.category_names, R.layout.spinner_item);
+        spinner.setAdapter(arrayAdapter);
     }
 
     DatePickerDialog.OnDateSetListener startDate = new DatePickerDialog.OnDateSetListener(){
