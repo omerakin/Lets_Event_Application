@@ -2,6 +2,7 @@ package com.example.akin_.letseventapplication;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +33,6 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
-
         // get edit texts
         event_name = (EditText) findViewById(R.id.event_name);
         location = (EditText) findViewById(R.id.location);
@@ -41,49 +41,81 @@ public class AddEventActivity extends AppCompatActivity {
         End_Date = (EditText) findViewById(R.id.End_Date);
         End_Time = (EditText) findViewById(R.id.End_Time);
         description = (EditText) findViewById(R.id.description);
-
-        setCurrentDateOnView();
     }
 
-    public void setCurrentDateOnView() {
-        String dateFormat = "MM-dd-yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
-        Start_Date.setText( sdf.format(calendar.getTime()));
-
-    }
-
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener(){
+    DatePickerDialog.OnDateSetListener startDate = new DatePickerDialog.OnDateSetListener(){
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            setCurrentDateOnView();
+            setStartDateOnView();
         }
     };
 
-    TimePickerDialog.OnTimeSetListener time = new TimePickerDialog.OnTimeSetListener(){
+    DatePickerDialog.OnDateSetListener endDate = new DatePickerDialog.OnDateSetListener(){
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setEndDateOnView();
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener startTime = new TimePickerDialog.OnTimeSetListener(){
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
+            setStartTimeOnView();
         }
     };
 
+    TimePickerDialog.OnTimeSetListener endTime = new TimePickerDialog.OnTimeSetListener(){
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+            setEndTimeOnView();
+        }
+    };
+
+    public void setStartDateOnView() {
+        String dateFormat = "MM-dd-yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+        Start_Date.setText( sdf.format(calendar.getTime()));
+    }
+
+    public void setEndDateOnView() {
+        String dateFormat = "MM-dd-yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+        End_Date.setText( sdf.format(calendar.getTime()));
+    }
+
+    public void setStartTimeOnView() {
+        String timeFormat = "hh:mm a";
+        SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.US);
+        Start_Time.setText( sdf.format(calendar.getTime()));
+    }
+
+    public void setEndTimeOnView() {
+        String timeFormat = "hh:mm a";
+        SimpleDateFormat sdf = new SimpleDateFormat(timeFormat, Locale.US);
+        End_Time.setText( sdf.format(calendar.getTime()));
+    }
+
     public void onStartDate (View view) {
         new DatePickerDialog( AddEventActivity.this,
-                date,
+                startDate,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show();
-
-
-
     }
 
     public void onStartTime (View view) {
         new TimePickerDialog( AddEventActivity.this,
-                time,
+                startTime,
                 calendar.get(Calendar.HOUR),
                 calendar.get(Calendar.MINUTE),
                 false).show();
@@ -91,7 +123,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     public void onEndDate (View view) {
         new DatePickerDialog( AddEventActivity.this,
-                date,
+                endDate,
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -99,12 +131,11 @@ public class AddEventActivity extends AppCompatActivity {
 
     public void onEndTime (View view) {
         new TimePickerDialog( AddEventActivity.this,
-                time,
+                endTime,
                 calendar.get(Calendar.HOUR),
                 calendar.get(Calendar.MINUTE),
                 false).show();
     }
-
 
     public void onAddEvent (View view) {
 
@@ -128,5 +159,7 @@ public class AddEventActivity extends AppCompatActivity {
         testAccount.put("Description", descriptionET);
         testAccount.saveInBackground();
 
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 }

@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         eventActivity.setIndicator("");
         eventActivity.setContent(new Intent(this, EventsActivity.class));
 
+        TabHost.TabSpec addEventActivity = tabHost.newTabSpec("AddEvent");
+        addEventActivity.setIndicator("");
+        addEventActivity.setContent(new Intent(this, AddEventActivity.class));
+
         TabHost.TabSpec activitiesActivity = tabHost.newTabSpec("Activities");
         activitiesActivity.setIndicator("");
         activitiesActivity.setContent(new Intent(this, ActivitiesActivity.class));
@@ -45,14 +49,16 @@ public class MainActivity extends AppCompatActivity {
 
         tabHost.addTab(mapActivity);
         tabHost.addTab(eventActivity);
+        tabHost.addTab(addEventActivity);
         tabHost.addTab(activitiesActivity);
         tabHost.addTab(profileActivity);
 
 
         tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_gray);
         tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_gray);
-        tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_activities_gray);
-        tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_profile_gray);
+        tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_map_gray);///////////
+        tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_activities_gray);
+        tabHost.getTabWidget().getChildAt(4).setBackgroundResource(R.drawable.ic_profile_gray);
 
         tabHost.getTabWidget().setCurrentTab(0);
         tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_white);
@@ -63,16 +69,19 @@ public class MainActivity extends AppCompatActivity {
 
                 tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_gray);
                 tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_gray);
-                tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_activities_gray);
-                tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_profile_gray);
+                tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_map_gray);///////////
+                tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_activities_gray);
+                tabHost.getTabWidget().getChildAt(4).setBackgroundResource(R.drawable.ic_profile_gray);
 
                 if(tabHost.getCurrentTab()==0){
                     tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_map_white);
                 }else if (tabHost.getCurrentTab()==1){
                     tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_events_white);
                 }else if (tabHost.getCurrentTab()==2){
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_map_white);//////////
+                }else if (tabHost.getCurrentTab()==3){
                     tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_activities_white);
-                }else {
+                }else{
                     tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_profile_white);
                 }
 

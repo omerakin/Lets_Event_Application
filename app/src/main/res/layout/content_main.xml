@@ -39,6 +39,12 @@
                     android:orientation="vertical"></LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ADDEVENT"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"></LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/ACTIVITIES"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -77,7 +77,7 @@
                 android:id="@+id/Date_Time1"
                 android:textColor="#ffffff"/>
 
-            <EditText
+            <android.widget.EditText
                 android:layout_width="125sp"
                 android:layout_height="50sp"
                 android:layout_gravity="center_horizontal"
@@ -89,14 +89,13 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff" />
 
-            <EditText
+            <android.widget.EditText
                 android:layout_width="125sp"
                 android:layout_height="50sp"
                 android:layout_marginLeft="15sp"
                 android:layout_gravity="center_horizontal"
                 android:onClick="onStartTime"
-                android:inputType="time"
-                android:ems="10"
+                android:focusable="false"
                 android:id="@+id/Start_Time"
                 android:hint="Start time"
                 android:background="#80000000"
@@ -118,27 +117,25 @@
                 android:id="@+id/Date_Time2"
                 android:textColor="#ffffff"/>
 
-            <EditText
+            <android.widget.EditText
                 android:layout_width="125sp"
                 android:layout_height="50sp"
                 android:layout_gravity="center_horizontal"
                 android:onClick="onEndDate"
-                android:inputType="date"
-                android:ems="10"
+                android:focusable="false"
                 android:id="@+id/End_Date"
                 android:hint="End date"
                 android:background="#80000000"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff" />
 
-            <EditText
+            <android.widget.EditText
                 android:layout_width="125sp"
                 android:layout_height="50sp"
                 android:layout_marginLeft="15sp"
                 android:layout_gravity="center_horizontal"
                 android:onClick="onEndTime"
-                android:inputType="time"
-                android:ems="10"
+                android:focusable="false"
                 android:id="@+id/End_Time"
                 android:hint="End time"
                 android:background="#80000000"
