@@ -54,35 +54,35 @@ public class MainActivity extends AppCompatActivity {
         tabHost.addTab(profileActivity);
 
 
-        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_gray);
-        tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_gray);
-        tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_map_gray);///////////
-        tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_activities_gray);
-        tabHost.getTabWidget().getChildAt(4).setBackgroundResource(R.drawable.ic_profile_gray);
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_unselected);
+        tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_unselected);
+        tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_addevent_unselected);
+        tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_activities_unselected);
+        tabHost.getTabWidget().getChildAt(4).setBackgroundResource(R.drawable.ic_profile_unselected);
 
         tabHost.getTabWidget().setCurrentTab(0);
-        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_white);
+        tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_selected);
 
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
 
-                tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_gray);
-                tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_gray);
-                tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_map_gray);///////////
-                tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_activities_gray);
-                tabHost.getTabWidget().getChildAt(4).setBackgroundResource(R.drawable.ic_profile_gray);
+                tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.ic_map_unselected);
+                tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.ic_events_unselected);
+                tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.ic_addevent_unselected);
+                tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.ic_activities_unselected);
+                tabHost.getTabWidget().getChildAt(4).setBackgroundResource(R.drawable.ic_profile_unselected);
 
                 if(tabHost.getCurrentTab()==0){
-                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_map_white);
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_map_selected);
                 }else if (tabHost.getCurrentTab()==1){
-                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_events_white);
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_events_selected);
                 }else if (tabHost.getCurrentTab()==2){
-                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_map_white);//////////
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_addevent_selected);
                 }else if (tabHost.getCurrentTab()==3){
-                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_activities_white);
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_activities_selected);
                 }else{
-                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_profile_white);
+                    tabHost.getTabWidget().getChildAt(tabHost.getCurrentTab()).setBackgroundResource(R.drawable.ic_profile_selected);
                 }
 
             }
