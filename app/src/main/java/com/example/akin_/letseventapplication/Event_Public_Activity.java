@@ -1,7 +1,12 @@
 package com.example.akin_.letseventapplication;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -10,6 +15,11 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +41,9 @@ public class Event_Public_Activity extends AppCompatActivity {
     // Array of strings to store currencies
     String[] eventDates ;
     String[] eventLocation ;
+
+    //hashmap li arraylist
+    List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +51,7 @@ public class Event_Public_Activity extends AppCompatActivity {
 
 
 
-
+        runQuery();
 
 
 
@@ -90,7 +103,7 @@ public class Event_Public_Activity extends AppCompatActivity {
 
                     }
                         // Each row in the list stores country name, currency and flag
-                        List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
+
 
                         for(int i=0;i<arrayLength;i++){
                             HashMap<String, String> hm = new HashMap<String,String>();
@@ -100,6 +113,7 @@ public class Event_Public_Activity extends AppCompatActivity {
                             hm.put("pla", "Location : " + eventLocation[i]);
                             aList.add(hm);
                         }
+
 
                         // Keys used in Hashmap
                         String[] from = { "flag","txt","cur", "pla" };
@@ -117,6 +131,10 @@ public class Event_Public_Activity extends AppCompatActivity {
                         // Setting the adapter to the listView
                         listView.setAdapter(adapter);
 
+
+
+
+
                     }
                 }
         ).executeAsync();
@@ -125,7 +143,44 @@ public class Event_Public_Activity extends AppCompatActivity {
 
 
     }
+    private void runQuery() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestEvent");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseEvents, ParseException e) {
+                if (e == null) {
+                    int len = parseEvents.size();
+                    for (int i = 0; i < len; i++) {
+                        ParseObject p = parseEvents.get(i);
+                        String pName = p.getString("Event_Name");
+                        String pLocation = p.getString("Location");
+                        String pDate = p.getString("Start_Date") + "  " + p.getString("Start_Time");
+                        String pPicture = Integer.toString(R.drawable.profile_pic);
+                        afterQueryProcessing(pName, pLocation, pDate, pPicture);
 
+                    }
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+
+                }
+            }
+        });
+
+    }
+
+    private void afterQueryProcessing(String pname, String plocation, String pdate, String ppicture) {
+        // You can access m2Status here reliably,
+        // assuming you only call this method
+        // as shown above, but you should still
+        // use defensive programming
+        HashMap<String, String> hm = new HashMap<String,String>();
+        hm.put("txt", "Name : " + pname);
+        hm.put("cur","Date : " + pdate);
+        hm.put("flag", ppicture );
+        hm.put("pla", "Location : " + plocation);
+        aList.add(hm);
+
+    }
+    
 
     @Override
     public void onBackPressed() {
