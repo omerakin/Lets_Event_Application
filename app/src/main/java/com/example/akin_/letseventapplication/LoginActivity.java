@@ -50,17 +50,14 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        //Face
+        //Facebook
         callbackManager = CallbackManager.Factory.create();
-
         boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
         if(loggedIn) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
-
         info = (TextView)findViewById(R.id.info);
-
         loginButton = (LoginButton)findViewById(R.id.login_button);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -182,7 +179,6 @@ public class LoginActivity extends AppCompatActivity {
         final String usernameET = String.valueOf(etUsername.getText());
         final String passwordET = String.valueOf(etPassword.getText());
         isPasswordSameAsParse = false;
-
 
         if((usernameET== null || usernameET.isEmpty())|| (passwordET== null || passwordET.isEmpty()) )
         {
