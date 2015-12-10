@@ -80,8 +80,8 @@ public class Event_Public_Activity extends AppCompatActivity {
                         try{
                         arr = obj.getJSONArray("data");
                             arrayLength = arr.length();
-                            oneByOne = arr.getJSONObject(0);
-                          //  info2.setText( arr.length() + "   "+ oneByOne.optString("name"));
+                            //oneByOne = arr.getJSONObject(0);
+                            //info2.setText( arr.length() + "   "+ oneByOne.optString("name"));
 
                             eventNames = new String[arrayLength];
                             eventDates = new String[arrayLength];

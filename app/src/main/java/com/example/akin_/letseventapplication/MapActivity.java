@@ -40,9 +40,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         mMap.setMyLocationEnabled(true);
-        mMap.setTrafficEnabled(true);
-        mMap.setIndoorEnabled(true);
-        mMap.setBuildingsEnabled(true);
+        //mMap.setTrafficEnabled(true);
+        //mMap.setIndoorEnabled(true);
+        //mMap.setBuildingsEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
 
