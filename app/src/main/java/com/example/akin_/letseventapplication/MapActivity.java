@@ -1,5 +1,11 @@
 package com.example.akin_.letseventapplication;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -13,6 +19,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +53,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.setBuildingsEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+        // Get LocationManager object from System Service LOCATION_SERVICE
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Create a criteria object to retrieve provider
+        Criteria criteria = new Criteria();
+        //Get the name of the best provider
+        String provider = locationManager.getBestProvider(criteria, true);
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        //get current location
+        //Location myLocation = locationManager.getLastKnownLocation(provider);
+
+        //get latitude and longitude
+        double latitude;
+        double longitude;
+        //latitude = myLocation.getLatitude();
+        //longitude = myLocation.getLongitude();
+
+        latitude = 41.195160;
+        longitude = 29.050421;
+
+        // Add a marker in myCoordinates and move the camera
+        LatLng myCoordinates = new LatLng(latitude, longitude);
+        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
     }
 
     @Override

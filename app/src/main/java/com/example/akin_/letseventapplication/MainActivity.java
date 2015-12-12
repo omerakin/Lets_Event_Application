@@ -29,23 +29,23 @@ public class MainActivity extends AppCompatActivity {
 
         TabHost.TabSpec mapActivity = tabHost.newTabSpec("Map");
         mapActivity.setIndicator("");
-        mapActivity.setContent(new Intent(this, MapActivity.class));
+        mapActivity.setContent((new Intent(this, MapActivity.class)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         TabHost.TabSpec eventActivity = tabHost.newTabSpec("Event");
         eventActivity.setIndicator("");
-        eventActivity.setContent(new Intent(this, EventsActivity.class));
+        eventActivity.setContent((new Intent(this, EventsActivity.class)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         TabHost.TabSpec addEventActivity = tabHost.newTabSpec("AddEvent");
         addEventActivity.setIndicator("");
-        addEventActivity.setContent(new Intent(this, AddEventActivity.class));
+        addEventActivity.setContent((new Intent(this, AddEventActivity.class)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         TabHost.TabSpec activitiesActivity = tabHost.newTabSpec("Activities");
         activitiesActivity.setIndicator("");
-        activitiesActivity.setContent(new Intent(this, ActivitiesActivity.class));
+        activitiesActivity.setContent((new Intent(this, ActivitiesActivity.class)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         TabHost.TabSpec profileActivity = tabHost.newTabSpec("Profile");
         profileActivity.setIndicator("");
-        profileActivity.setContent(new Intent(this, ProfileActivity.class));
+        profileActivity.setContent((new Intent(this, ProfileActivity.class)).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         tabHost.addTab(mapActivity);
         tabHost.addTab(eventActivity);

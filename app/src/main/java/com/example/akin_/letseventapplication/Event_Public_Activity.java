@@ -181,18 +181,19 @@ public class Event_Public_Activity extends AppCompatActivity {
                 if (e == null) {
                     int len = parseEvents.size();
                     for (int i = 0; i < len; i++) {
+                        //get the i th element of events in order to obtain details
                         ParseObject p = parseEvents.get(i);
+
+                        //get the detail information of event
                         String pName = p.getString("Event_Name");
                         String pLocation = p.getString("Location");
                         String pDate = p.getString("Start_Date") + "  " + p.getString("Start_Time");
                         String pPicture = Integer.toString(R.drawable.other);
 
-
-                        if (p.getString("Category_Name").contains("Birthday")) {
+                        // set the picture of event
+                        if (p.getString("Category_Name").equals("Birthday")) {
                             pPicture = Integer.toString(R.drawable.birthday);
-                        }
-                        /*
-                        else if (p.getString("Category_Name").equals("Concerts")) {
+                        } else if (p.getString("Category_Name").equals("Concerts")) {
                             pPicture = Integer.toString(R.drawable.concerts);
                         } else if (p.getString("Category_Name").equals("Conferences")) {
                             pPicture = Integer.toString(R.drawable.conference);
@@ -255,8 +256,8 @@ public class Event_Public_Activity extends AppCompatActivity {
                         } else {
                             pPicture = Integer.toString(R.drawable.other);
                         }
-                        */
 
+                        //set other adjustments
                         afterQueryProcessing(pName, pLocation, pDate, pPicture);
 
                     }
@@ -275,7 +276,7 @@ public class Event_Public_Activity extends AppCompatActivity {
         // as shown above, but you should still
         // use defensive programming
         HashMap<String, String> hm = new HashMap<String,String>();
-        hm.put("txt", "Name : " + pname);
+        hm.put("txt", pname);
         hm.put("cur","Date : " + pdate);
         hm.put("flag", ppicture );
         hm.put("pla", "Location : " + plocation);
