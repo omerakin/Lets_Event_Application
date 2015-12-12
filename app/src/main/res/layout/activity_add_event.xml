@@ -159,10 +159,18 @@
                 android:textColor="#ffffff"/>
 
             <Spinner
-                android:layout_width="match_parent"
+                android:layout_width="125sp"
                 android:layout_height="50sp"
                 android:layout_gravity="center_horizontal"
                 android:id="@+id/category"
+                android:background="#80000000"
+                android:textColor="#ffffff" />
+            <Spinner
+                android:layout_width="125sp"
+                android:layout_height="50sp"
+                android:layout_marginLeft="15sp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/type"
                 android:background="#80000000"
                 android:textColor="#ffffff" />
         </LinearLayout>

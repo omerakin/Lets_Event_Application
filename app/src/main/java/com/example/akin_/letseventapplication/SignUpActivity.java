@@ -64,8 +64,5 @@ public class SignUpActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
-
-
     }
 }

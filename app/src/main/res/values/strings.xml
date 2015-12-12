@@ -8,8 +8,7 @@
     <string name="facebook_app_id">1707175919518560</string>
     <string name="title_activity_event__information_">Event_Information_Activity</string>
     <string-array name="category_names">
-
-        <item>Select a type</item>
+        <item>Category</item>
         <item>Concerts - Tour Dates</item>
         <item>Conferences - Tradeshows</item>
         <item>Comedy Events</item>
@@ -39,8 +38,12 @@
         <item>Sports</item>
         <item>Technology</item>
         <item>Other - Miscellaneous</item>
-
     </string-array>
-
+    <string-array name="type_names">
+        <item>Type</item>
+        <item>Public</item>
+        <item>Friends</item>
+        <item>Private</item>
+    </string-array>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.akin_.letseventapplication;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -31,8 +32,8 @@ public class AddEventActivity extends AppCompatActivity {
     private EditText End_Time;
     private EditText description;
     final Calendar calendar = Calendar.getInstance();
-    Spinner spinner;
-    ArrayAdapter<CharSequence> arrayAdapter;
+    Spinner spinnerCategory, spinnerType;
+    ArrayAdapter<CharSequence> arrayAdapterCategory, arrayAdapterType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,16 @@ public class AddEventActivity extends AppCompatActivity {
         End_Time = (EditText) findViewById(R.id.End_Time);
         description = (EditText) findViewById(R.id.description);
 
-        //spinner
-        spinner = (Spinner) findViewById(R.id.category);
-        arrayAdapter = ArrayAdapter.createFromResource(this, R.array.category_names, R.layout.spinner_item);
-        spinner.setAdapter(arrayAdapter);
+        //spinnerCategory
+        spinnerCategory = (Spinner) findViewById(R.id.category);
+        spinnerCategory.setSelection(0);
+        arrayAdapterCategory = ArrayAdapter.createFromResource(this, R.array.category_names, R.layout.spinner_item);
+        spinnerCategory.setAdapter(arrayAdapterCategory);
+        //spinnerType
+        spinnerType = (Spinner) findViewById(R.id.type);
+        spinnerType.setSelection(0);
+        arrayAdapterType = ArrayAdapter.createFromResource(this, R.array.type_names, R.layout.spinner_item);
+        spinnerType.setAdapter(arrayAdapterType);
     }
 
     DatePickerDialog.OnDateSetListener startDate = new DatePickerDialog.OnDateSetListener(){
@@ -157,20 +164,51 @@ public class AddEventActivity extends AppCompatActivity {
         String Start_TimeET = String.valueOf(Start_Time.getText());
         String End_DateET = String.valueOf(End_Date.getText());
         String End_TimeET = String.valueOf(End_Time.getText());
+        String CategoryName = spinnerCategory.getSelectedItem().toString();
+        String TypeName = spinnerType.getSelectedItem().toString();
         String descriptionET = String.valueOf(description.getText());
 
-        //save to the Parse
-        ParseObject testAccount = new ParseObject("TestEvent");
-        testAccount.put("Event_Name", event_nameET);
-        testAccount.put("Location", locationET);
-        testAccount.put("Start_Date", Start_DateET);
-        testAccount.put("Start_Time", Start_TimeET);
-        testAccount.put("End_Date", End_DateET);
-        testAccount.put("End_Time", End_TimeET);
-        testAccount.put("Description", descriptionET);
-        testAccount.saveInBackground();
 
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+        //check the validatiy of fields
+        if (event_nameET.trim().length()==0){
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the event name!").setNeutralButton("Close", null).show();
+        } else if (locationET.trim().length()==0){
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the location!").setNeutralButton("Close", null).show();
+        } else if (Start_DateET.trim().length()==0) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the start date!").setNeutralButton("Close", null).show();
+        } else if (Start_TimeET.trim().length()==0) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the start time!").setNeutralButton("Close", null).show();
+        } else if (End_DateET.trim().length()==0) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the end date!").setNeutralButton("Close", null).show();
+        } else if (End_TimeET.trim().length()==0) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the end time!").setNeutralButton("Close", null).show();
+        } else if (CategoryName.equals(spinnerCategory.getItemAtPosition(0))) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please select a suitable category name!").setNeutralButton("Close", null).show();
+        } else if (TypeName.equals(spinnerType.getItemAtPosition(0))) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please select a suitable type name!").setNeutralButton("Close", null).show();
+        } else if (descriptionET.trim().length()==0) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the description!").setNeutralButton("Close", null).show();
+        } else {
+
+            //save to the Parse
+            ParseObject testAccount = new ParseObject("TestEvent");
+            testAccount.put("Event_Name", event_nameET);
+            testAccount.put("Location", locationET);
+            testAccount.put("Start_Date", Start_DateET);
+            testAccount.put("Start_Time", Start_TimeET);
+            testAccount.put("End_Date", End_DateET);
+            testAccount.put("End_Time", End_TimeET);
+            testAccount.put("Category_Name", CategoryName);
+            testAccount.put("Type_Name", TypeName);
+            testAccount.put("Description", descriptionET);
+            testAccount.saveInBackground();
+
+            // Show added message to user
+            new AlertDialog.Builder(this).setTitle("Congratulations").setMessage("Your event is successfully added !").setNeutralButton("Continue", null).show();
+
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+
     }
 }
