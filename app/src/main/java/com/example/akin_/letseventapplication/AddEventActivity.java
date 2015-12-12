@@ -26,7 +26,7 @@ public class AddEventActivity extends AppCompatActivity {
 
     private EditText event_name;
     private EditText location;
-    private TextView Start_Date;
+    private EditText Start_Date;
     private EditText Start_Time;
     private EditText End_Date;
     private EditText End_Time;
@@ -43,7 +43,7 @@ public class AddEventActivity extends AppCompatActivity {
         // get edit texts
         event_name = (EditText) findViewById(R.id.event_name);
         location = (EditText) findViewById(R.id.location);
-        Start_Date = (TextView) findViewById(R.id.Start_Date);
+        Start_Date = (EditText) findViewById(R.id.Start_Date);
         Start_Time = (EditText) findViewById(R.id.Start_Time);
         End_Date = (EditText) findViewById(R.id.End_Date);
         End_Time = (EditText) findViewById(R.id.End_Time);
@@ -206,8 +206,26 @@ public class AddEventActivity extends AppCompatActivity {
             // Show added message to user
             new AlertDialog.Builder(this).setTitle("Congratulations").setMessage("Your event is successfully added !").setNeutralButton("Continue", null).show();
 
+            //convert them to default value
+            event_name.setText("");
+            location.setText("");
+            Start_Date.setText("");
+            Start_Time.setText("");
+            End_Date.setText("");
+            End_Time.setText("");
+            spinnerCategory.setSelection(0);
+            spinnerType.setSelection(0);
+            description.setText("");
+
+            //Direct user to the my events tab
+            MainActivity parentActivity;
+            parentActivity = (MainActivity) this.getParent();
+            parentActivity.switchTab(4);
+
+            /*
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
+            */
         }
 
     }

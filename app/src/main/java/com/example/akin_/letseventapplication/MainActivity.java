@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void switchTab (int tab) {
+        tabHost.setCurrentTab(tab);
+    }
+
     @Override
     public void onBackPressed() {
     }
