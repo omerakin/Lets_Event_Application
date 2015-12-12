@@ -151,10 +151,23 @@ public class Event_Public_Activity extends AppCompatActivity {
             SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
 
             // Getting a reference to listview of main.xml layout file
-            ListView listView = (ListView) findViewById(R.id.listView);
+            final ListView listView = (ListView) findViewById(R.id.listView);
 
             // Setting the adapter to the listView
             listView.setAdapter(adapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+
+                    int posbug = position;
+                    Object asd = listView.getItemAtPosition(position);
+                    Intent intent = new Intent(Event_Public_Activity.this, EventDescriptionActivity.class);
+                    intent.putExtra("name", Integer.toString(position));
+                    startActivity(intent);
+
+                    }
+
+            });
         }
 
 
