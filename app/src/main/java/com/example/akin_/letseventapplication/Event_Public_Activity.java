@@ -63,86 +63,104 @@ public class Event_Public_Activity extends AppCompatActivity {
        // params.putString ("fields", "first_name, last_name, email");
         //params.putString("fields", "last_name");
             /* make the API call */
-        new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/search",
-                params,
-                HttpMethod.GET,
-                new GraphRequest.Callback() {
-                    public void onCompleted(GraphResponse response) {
+        if(AccessToken.getCurrentAccessToken() != null) {
+            new GraphRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/search",
+                    params,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
             /* handle the result */
-                    //    info2.setText(info2.getText() + response.toString());
-                        JSONObject obj = response.getJSONObject();
-                        JSONArray arr;
-                        JSONObject oneByOne;
-                        JSONObject oneByOneChild;
+                            //    info2.setText(info2.getText() + response.toString());
+                            JSONObject obj = response.getJSONObject();
+                            JSONArray arr;
+                            JSONObject oneByOne;
+                            JSONObject oneByOneChild;
 
-                        try{
-                        arr = obj.getJSONArray("data");
-                            arrayLength = arr.length();
-                            //oneByOne = arr.getJSONObject(0);
-                            //info2.setText( arr.length() + "   "+ oneByOne.optString("name"));
+                            try {
+                                arr = obj.getJSONArray("data");
+                                arrayLength = arr.length();
+                                //oneByOne = arr.getJSONObject(0);
+                                //info2.setText( arr.length() + "   "+ oneByOne.optString("name"));
 
-                            eventNames = new String[arrayLength];
-                            eventDates = new String[arrayLength];
-                            eventPictures = new int[arrayLength];
-                            eventLocation = new String[arrayLength];
+                                eventNames = new String[arrayLength];
+                                eventDates = new String[arrayLength];
+                                eventPictures = new int[arrayLength];
+                                eventLocation = new String[arrayLength];
 
-                            for (int i=0; i<arrayLength; i++){
-                                oneByOne = arr.getJSONObject(i);
-                                eventNames[i]= oneByOne.optString("name");
-                                eventDates[i] = oneByOne.optString("start_time");
-                                eventPictures[i] = R.drawable.profile_pic;
-                                oneByOneChild = oneByOne.getJSONObject("place");
-                                eventLocation[i] = oneByOneChild.optString("name");
+                                for (int i = 0; i < arrayLength; i++) {
+                                    oneByOne = arr.getJSONObject(i);
+                                    eventNames[i] = oneByOne.optString("name");
+                                    eventDates[i] = oneByOne.optString("start_time");
+                                    eventPictures[i] = R.drawable.profile_pic;
+                                    oneByOneChild = oneByOne.getJSONObject("place");
+                                    eventLocation[i] = oneByOneChild.optString("name");
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+
+                            }
+                            // Each row in the list stores country name, currency and flag
+
+
+                            for (int i = 0; i < arrayLength; i++) {
+                                HashMap<String, String> hm = new HashMap<String, String>();
+                                hm.put("txt", "Name : " + eventNames[i]);
+                                hm.put("cur", "Date : " + eventDates[i]);
+                                hm.put("flag", Integer.toString(eventPictures[i]));
+                                hm.put("pla", "Location : " + eventLocation[i]);
+                                aList.add(hm);
                             }
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                            // Keys used in Hashmap
+                            String[] from = {"flag", "txt", "cur", "pla"};
 
-                    }
-                        // Each row in the list stores country name, currency and flag
+                            // Ids of views in listview_layout
+                            int[] to = {R.id.flag, R.id.txt, R.id.cur, R.id.pla};
+
+                            // Instantiating an adapter to store each items
+                            // R.layout.listview_layout defines the layout of each item
+                            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
+
+                            // Getting a reference to listview of main.xml layout file
+                            ListView listView = (ListView) findViewById(R.id.listView);
+
+                            // Setting the adapter to the listView
+                            listView.setAdapter(adapter);
 
 
-                        for(int i=0;i<arrayLength;i++){
-                            HashMap<String, String> hm = new HashMap<String,String>();
-                            hm.put("txt", "Name : " + eventNames[i]);
-                            hm.put("cur","Date : " + eventDates[i]);
-                            hm.put("flag", Integer.toString(eventPictures[i]) );
-                            hm.put("pla", "Location : " + eventLocation[i]);
-                            aList.add(hm);
                         }
-
-
-                        // Keys used in Hashmap
-                        String[] from = { "flag","txt","cur", "pla" };
-
-                        // Ids of views in listview_layout
-                        int[] to = { R.id.flag,R.id.txt,R.id.cur, R.id.pla};
-
-                        // Instantiating an adapter to store each items
-                        // R.layout.listview_layout defines the layout of each item
-                        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
-
-                        // Getting a reference to listview of main.xml layout file
-                        ListView listView = (ListView) findViewById(R.id.listView);
-
-                        // Setting the adapter to the listView
-                        listView.setAdapter(adapter);
-
-
-
-
-
                     }
-                }
-        ).executeAsync();
+            ).executeAsync();
+        }else{
 
+
+
+            // Keys used in Hashmap
+            String[] from = {"flag", "txt", "cur", "pla"};
+
+            // Ids of views in listview_layout
+            int[] to = {R.id.flag, R.id.txt, R.id.cur, R.id.pla};
+
+            // Instantiating an adapter to store each items
+            // R.layout.listview_layout defines the layout of each item
+            SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
+
+            // Getting a reference to listview of main.xml layout file
+            ListView listView = (ListView) findViewById(R.id.listView);
+
+            // Setting the adapter to the listView
+            listView.setAdapter(adapter);
+        }
 
 
 
     }
+
     private void runQuery() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TestEvent");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -178,7 +196,21 @@ public class Event_Public_Activity extends AppCompatActivity {
         hm.put("flag", ppicture );
         hm.put("pla", "Location : " + plocation);
         aList.add(hm);
+// Keys used in Hashmap
+        String[] from = {"flag", "txt", "cur", "pla"};
 
+        // Ids of views in listview_layout
+        int[] to = {R.id.flag, R.id.txt, R.id.cur, R.id.pla};
+
+        // Instantiating an adapter to store each items
+        // R.layout.listview_layout defines the layout of each item
+        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
+
+        // Getting a reference to listview of main.xml layout file
+        ListView listView = (ListView) findViewById(R.id.listView);
+
+        // Setting the adapter to the listView
+        listView.setAdapter(adapter);
     }
     
 
