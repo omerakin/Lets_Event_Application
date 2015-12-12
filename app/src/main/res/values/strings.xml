@@ -9,11 +9,12 @@
     <string name="title_activity_event__information_">Event_Information_Activity</string>
     <string-array name="category_names">
         <item>Category</item>
-        <item>Concerts - Tour Dates</item>
-        <item>Conferences - Tradeshows</item>
+        <item>Birthday</item>
+        <item>Concerts</item>
+        <item>Conferences</item>
         <item>Comedy Events</item>
         <item>Education</item>
-        <item>Kids - Family</item>
+        <item>Family</item>
         <item>Festivals</item>
         <item>Film</item>
         <item>Food - Wine</item>
@@ -21,9 +22,9 @@
         <item>Art Galleries - Exhibits</item>
         <item>Health - Wellness</item>
         <item>Holiday Events</item>
+        <item>Kids</item>
         <item>Literary - Books</item>
         <item>Museums - Attractions</item>
-        <item>Neighborhood</item>
         <item>Business - Networking</item>
         <item>Nightlife - Singles</item>
         <item>University - Alumni</item>
@@ -37,6 +38,8 @@
         <item>Religion - Spirituality</item>
         <item>Sports</item>
         <item>Technology</item>
+        <item>Tour Dates</item>
+        <item>Tradeshows</item>
         <item>Other - Miscellaneous</item>
     </string-array>
     <string-array name="type_names">

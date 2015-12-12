@@ -165,7 +165,7 @@ public class Event_Public_Activity extends AppCompatActivity {
                     intent.putExtra("name", Integer.toString(position));
                     startActivity(intent);
 
-                    }
+                }
 
             });
         }
@@ -185,7 +185,78 @@ public class Event_Public_Activity extends AppCompatActivity {
                         String pName = p.getString("Event_Name");
                         String pLocation = p.getString("Location");
                         String pDate = p.getString("Start_Date") + "  " + p.getString("Start_Time");
-                        String pPicture = Integer.toString(R.drawable.profile_pic);
+                        String pPicture = Integer.toString(R.drawable.other);
+
+
+                        if (p.getString("Category_Name").contains("Birthday")) {
+                            pPicture = Integer.toString(R.drawable.birthday);
+                        }
+                        /*
+                        else if (p.getString("Category_Name").equals("Concerts")) {
+                            pPicture = Integer.toString(R.drawable.concerts);
+                        } else if (p.getString("Category_Name").equals("Conferences")) {
+                            pPicture = Integer.toString(R.drawable.conference);
+                        } else if (p.getString("Category_Name").equals("Comedy Events")) {
+                            pPicture = Integer.toString(R.drawable.comedyevents);
+                        } else if (p.getString("Category_Name").equals("Education")) {
+                            pPicture = Integer.toString(R.drawable.education);
+                        } else if (p.getString("Category_Name").equals("Family")) {
+                            pPicture = Integer.toString(R.drawable.family);
+                        } else if (p.getString("Category_Name").equals("Festivals")) {
+                            pPicture = Integer.toString(R.drawable.festivals);
+                        } else if (p.getString("Category_Name").equals("Film")) {
+                            pPicture = Integer.toString(R.drawable.film);
+                        } else if (p.getString("Category_Name").equals("Food - Wine")) {
+                            pPicture = Integer.toString(R.drawable.food_wine);
+                        } else if (p.getString("Category_Name").equals("Fundraising - Charity")) {
+                            pPicture = Integer.toString(R.drawable.fundraising);
+                        } else if (p.getString("Category_Name").equals("Art Galleries - Exhibits")) {
+                            pPicture = Integer.toString(R.drawable.exhibits);
+                        } else if (p.getString("Category_Name").equals("Health - Wellness")) {
+                            pPicture = Integer.toString(R.drawable.health);
+                        } else if (p.getString("Category_Name").equals("Holiday Events")) {
+                            pPicture = Integer.toString(R.drawable.holiday);
+                        } else if (p.getString("Category_Name").equals("Kids")) {
+                            pPicture = Integer.toString(R.drawable.kids);
+                        } else if (p.getString("Category_Name").equals("Literary - Books")) {
+                            pPicture = Integer.toString(R.drawable.literary);
+                        } else if (p.getString("Category_Name").equals("Museums - Attractions")) {
+                            pPicture = Integer.toString(R.drawable.museums);
+                        } else if (p.getString("Category_Name").equals("Business - Networking")) {
+                            pPicture = Integer.toString(R.drawable.bussiness);
+                        } else if (p.getString("Category_Name").equals("Nightlife - Singles")) {
+                            pPicture = Integer.toString(R.drawable.nightlife);
+                        } else if (p.getString("Category_Name").equals("University - Alumni")) {
+                            pPicture = Integer.toString(R.drawable.university);
+                        } else if (p.getString("Category_Name").equals("Organizations - Meetups")) {
+                            pPicture = Integer.toString(R.drawable.organizations);
+                        } else if (p.getString("Category_Name").equals("Outdoors - Recreation")) {
+                            pPicture = Integer.toString(R.drawable.outdoors);
+                        } else if (p.getString("Category_Name").equals("Performing Arts")) {
+                            pPicture = Integer.toString(R.drawable.performing);
+                        } else if (p.getString("Category_Name").equals("Pets")) {
+                            pPicture = Integer.toString(R.drawable.pets);
+                        } else if (p.getString("Category_Name").equals("Politics - Activism")) {
+                            pPicture = Integer.toString(R.drawable.politics);
+                        } else if (p.getString("Category_Name").equals("Sales - Retail")) {
+                            pPicture = Integer.toString(R.drawable.retail);
+                        } else if (p.getString("Category_Name").equals("Science")) {
+                            pPicture = Integer.toString(R.drawable.science);
+                        } else if (p.getString("Category_Name").equals("Religion - Spirituality")) {
+                            pPicture = Integer.toString(R.drawable.religion);
+                        } else if (p.getString("Category_Name").equals("Sports")) {
+                            pPicture = Integer.toString(R.drawable.sports);
+                        } else if (p.getString("Category_Name").equals("Technology")) {
+                            pPicture = Integer.toString(R.drawable.teknoloji);
+                        } else if (p.getString("Category_Name").equals("Tour Dates")) {
+                            pPicture = Integer.toString(R.drawable.tours);
+                        } else if (p.getString("Category_Name").equals("Tradeshows")) {
+                            pPicture = Integer.toString(R.drawable.tradeshow);
+                        } else {
+                            pPicture = Integer.toString(R.drawable.other);
+                        }
+                        */
+
                         afterQueryProcessing(pName, pLocation, pDate, pPicture);
 
                     }
