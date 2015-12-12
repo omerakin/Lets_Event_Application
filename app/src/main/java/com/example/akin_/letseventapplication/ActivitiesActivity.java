@@ -22,8 +22,8 @@ public class ActivitiesActivity extends AppCompatActivity {
         activities_Followed_Activity.setIndicator("FOLLOWED");
         activities_Followed_Activity.setContent(new Intent(this, Activities_Followed_Activity.class));
 
-        TabHost.TabSpec activities_You_Activity = tabHost3.newTabSpec("You");
-        activities_You_Activity.setIndicator("YOU");
+        TabHost.TabSpec activities_You_Activity = tabHost3.newTabSpec("Me");
+        activities_You_Activity.setIndicator("ME");
         activities_You_Activity.setContent(new Intent(this, Activities_You_Activity.class));
 
         tabHost3.addTab(activities_Followed_Activity);
