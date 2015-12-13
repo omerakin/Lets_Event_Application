@@ -53,15 +53,17 @@
                 android:id="@+id/Location"
                 android:textColor="#ffffff"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="50sp"
+                android:layout_height="65sp"
                 android:layout_gravity="center_horizontal"
-                android:id="@+id/location"
+                android:id="@+id/autoCompleteTextLocation"
                 android:hint="Include a place or address"
                 android:background="#80000000"
                 android:textColor="#ffffff"
-                android:textColorHint="#ffffff" />
+                android:textColorHint="#ffffff"
+                android:ems="25" />
+
         </LinearLayout>
 
 

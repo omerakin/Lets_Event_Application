@@ -1,6 +1,5 @@
 package com.example.akin_.letseventapplication;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -8,13 +7,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-
+import android.support.v4.content.ContextCompat;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -60,24 +58,43 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         //Get the name of the best provider
         String provider = locationManager.getBestProvider(criteria, true);
 
+        if ( ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+
+            /*
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LocationService.MY_PERMISSION_ACCESS_COURSE_LOCATION);
+            */
+            return;
+        }
+
+        // or,
+
+        /*
+        try {
+            //get current location
+            myLocation = locationManager.getLastKnownLocation(provider);
+        } catch (SecurityException e) {
+            Log.e("PERMISSION_EXCEPTION", "PERMISSION_NOT_GRANTED");
+        }
+        */
 
         //get current location
-        //Location myLocation = locationManager.getLastKnownLocation(provider);
+        Location myLocation = locationManager.getLastKnownLocation(provider);
 
         //get latitude and longitude
         double latitude;
         double longitude;
-        //latitude = myLocation.getLatitude();
-        //longitude = myLocation.getLongitude();
+        latitude = myLocation.getLatitude();
+        longitude = myLocation.getLongitude();
 
-        latitude = 41.195160;
-        longitude = 29.050421;
+        //latitude = 41.195160;
+        //longitude = 29.050421;
 
         // Add a marker in myCoordinates and move the camera
         LatLng myCoordinates = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(myCoordinates).title("Marker in Sydney"));
+        //mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I am here!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
     }
 
     @Override
