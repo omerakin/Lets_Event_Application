@@ -109,8 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void getNameandLastnameFromParse() {
 
-        //NameLastname = (TextView) findViewById(R.id.nameLastname);
-        NameLastname = (TextView) findViewById(R.id.textView4);
+        NameLastname = (TextView) findViewById(R.id.nameLastname);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -130,6 +129,8 @@ public class ProfileActivity extends AppCompatActivity {
                         if(pEmail.equals(UsernameString) && pPassword.equals(PasswordString)){
                             pName = p.getString("Name");
                             pLastname = p.getString("Lastname");
+                            pName = pName.substring(0,1).toUpperCase() + pName.substring(1);
+                            pLastname = pLastname.substring(0,1).toUpperCase() + pLastname.substring(1);
                             NameLastname.setText(pName + " " + pLastname);
                             return;
                         } else {
