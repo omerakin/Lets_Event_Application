@@ -25,6 +25,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
     String[] commentCreationDate ;
     String[] commentComment ;
 
+
     List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
 
     @Override
