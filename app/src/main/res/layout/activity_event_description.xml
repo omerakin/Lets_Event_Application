@@ -87,4 +87,42 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/textView9"
         android:layout_alignEnd="@+id/textView9" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fillViewport="false">
+    </ScrollView>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView2"
+        android:layout_below="@+id/event_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comment"
+        android:id="@+id/buttonComment"
+        android:layout_below="@+id/textView14"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/commentBox"
+        android:hint="Comment here"
+        android:background="#80000000"
+        android:textColorHint="#ffffff"
+        android:layout_below="@+id/textView14"
+        android:layout_toLeftOf="@+id/buttonComment"
+        android:layout_toStartOf="@+id/buttonComment" />
+
 </RelativeLayout>
