@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -98,7 +99,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
         info3.setText(info3.getText() + pname + "--" + pdate + "--" + pcomment + "--");
     }
-    public void commentPressed(){
+    public void commentPressed(View view){
         ParseObject testAccount = new ParseObject("Comments");
         testAccount.put("User", "deneme");
         testAccount.put("Event", "deneme");

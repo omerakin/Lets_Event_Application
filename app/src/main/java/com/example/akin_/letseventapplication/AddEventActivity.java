@@ -6,6 +6,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseObject;
 
 import org.json.JSONArray;
@@ -37,6 +40,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class AddEventActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -51,6 +55,8 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
     final Calendar calendar = Calendar.getInstance();
     Spinner spinnerCategory, spinnerType;
     ArrayAdapter<CharSequence> arrayAdapterCategory, arrayAdapterType;
+    private double LatitudeOfLocation;
+    private double LongitudeOfLocation;
 
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
@@ -195,6 +201,12 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
         String TypeName = spinnerType.getSelectedItem().toString();
         String descriptionET = String.valueOf(description.getText());
 
+        //get the latitude and longitude of location
+        getLatitudeLongitudeOfLocation(locationET);
+
+        System.out.println("LatitudeOfLocation........" + LatitudeOfLocation + "...................");
+        System.out.println("LongitudeOfLocation........" + LongitudeOfLocation + "...................");
+
         //check the validatiy of fields
         if (event_nameET.trim().length()==0){
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the event name!").setNeutralButton("Close", null).show();
@@ -220,6 +232,8 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
             ParseObject testAccount = new ParseObject("TestEvent");
             testAccount.put("Event_Name", event_nameET);
             testAccount.put("Location", locationET);
+            testAccount.put("Latitude", LatitudeOfLocation);
+            testAccount.put("Longitude", LongitudeOfLocation);
             testAccount.put("Start_Date", Start_DateET);
             testAccount.put("Start_Time", Start_TimeET);
             testAccount.put("End_Date", End_DateET);
@@ -255,7 +269,6 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
         }
 
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -361,4 +374,27 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
             return filter;
         }
     }
+
+    private void getLatitudeLongitudeOfLocation(String locationET) {
+
+        if(Geocoder.isPresent()){
+            try {
+                Geocoder gc = new Geocoder(getBaseContext());
+                List<Address> addresses= gc.getFromLocationName(locationET, 1); // get the found Address Objects
+                List<LatLng> ll = new ArrayList<LatLng>(addresses.size()); // A list to save the coordinates if they are available
+                for(Address a : addresses){
+                    if(a.hasLatitude() && a.hasLongitude()){
+                        ll.add(new LatLng(a.getLatitude(), a.getLongitude()));
+                        LatitudeOfLocation = a.getLatitude();
+                        LongitudeOfLocation = a.getLongitude();
+                    }
+                }
+            } catch (IOException e) {
+                // if there is no place that has Latitude and Longitude, set them to default values
+                LatitudeOfLocation = 555.0;
+                LongitudeOfLocation = 555.0;
+            }
+        }
+    }
+
 }

@@ -13,11 +13,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private LocationManager locationManager;
+    private double latitude;
+    private double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +53,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mMap.setMyLocationEnabled(true);
-        mMap.setTrafficEnabled(true);
         mMap.setIndoorEnabled(true);
         mMap.setBuildingsEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -82,8 +90,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         Location myLocation = locationManager.getLastKnownLocation(provider);
 
         //get latitude and longitude
-        double latitude;
-        double longitude;
         //latitude = myLocation.getLatitude();
         //longitude = myLocation.getLongitude();
 
@@ -94,7 +100,48 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng myCoordinates = new LatLng(latitude, longitude);
         //mMap.addMarker(new MarkerOptions().position(myCoordinates).title("I am here!"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(myCoordinates));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+
+        getNearbyEvents();
+    }
+
+    private void getNearbyEvents() {
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestEvent");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseEvent, ParseException e) {
+                if (e == null) {
+                    int len = parseEvent.size();
+                    for (int i = 0; i < len; i++) {
+                        //get the i th element of event in order to obtain details
+                        ParseObject p = parseEvent.get(i);
+
+                        //get the detail information of userAccount
+                        double pLatitude = p.getDouble("Latitude");
+                        double pLongitude = p.getDouble("Longitude");
+                        String pEvent_Name;
+                        String pCategory_Name;
+
+                        if(((latitude - pLatitude <= 1) || (latitude - pLatitude <= -1)) &&
+                                ((longitude - pLongitude <= 1) || (longitude - pLongitude <= -1))){
+                            pEvent_Name = p.getString("Event_Name");
+                            pCategory_Name = p.getString("Category_Name");
+                            LatLng EventLatLng = new LatLng(pLatitude,pLongitude);
+                            mMap.addMarker(new MarkerOptions().position(EventLatLng).title(pEvent_Name + "\n" + pCategory_Name));
+
+                        } else if ((pLatitude == 555.0 && pLongitude  == 555.0) ||
+                                            (pLatitude == 0.0 && pLongitude  == 0.0)){
+                            // do not display
+                        }
+
+                    }
+                } else {
+                    System.out.println("Error::: in getNearbyEvents()!");
+
+                }
+            }
+        });
+
     }
 
     @Override
