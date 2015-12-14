@@ -73,7 +73,7 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
 
         //AutoComplete TextView
         AutoCompleteTextView autoCompleteTextViewLocation = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextLocation);
-        autoCompleteTextViewLocation.setAdapter(new GooglePlacesAutocompleteAdapter(this, R.layout.support_simple_spinner_dropdown_item));
+        autoCompleteTextViewLocation.setAdapter(new GooglePlacesAutocompleteAdapter(this, R.layout.activity_add_event_location_list));
         autoCompleteTextViewLocation.setOnItemClickListener(this);
 
         //spinnerCategory
