@@ -88,29 +88,13 @@
         android:layout_alignRight="@+id/textView9"
         android:layout_alignEnd="@+id/textView9" />
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:fillViewport="false">
-    </ScrollView>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView2"
-        android:layout_below="@+id/event_name"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Comment"
         android:id="@+id/buttonComment"
+        android:onClick="commentPressed"
         android:layout_below="@+id/textView14"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
@@ -125,5 +109,32 @@
         android:layout_below="@+id/textView14"
         android:layout_toLeftOf="@+id/buttonComment"
         android:layout_toStartOf="@+id/buttonComment" />
+
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView3"
+        android:layout_below="@id/commentBox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:fillViewport="false">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comments :"
+            android:id="@+id/info3"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    </ScrollView>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView2"
+        android:layout_below="@+id/scrollView3"
+        tools:listitem="@layout/listviewcomment_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
