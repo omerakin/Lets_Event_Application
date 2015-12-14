@@ -78,6 +78,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         HashMap<String, String> hm = new HashMap<String,String>();
         hm.put("commentUserName", pname);
         hm.put("commentCreated"," Created At : " + pdate);
+
         hm.put("commentText", pnumber + "  :  "+ pcomment);
         aList.add(hm);
         // Keys used in Hashmap
