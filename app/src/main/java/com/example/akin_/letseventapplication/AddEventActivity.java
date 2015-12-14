@@ -195,7 +195,6 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
         String TypeName = spinnerType.getSelectedItem().toString();
         String descriptionET = String.valueOf(description.getText());
 
-
         //check the validatiy of fields
         if (event_nameET.trim().length()==0){
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please fill the event name!").setNeutralButton("Close", null).show();
