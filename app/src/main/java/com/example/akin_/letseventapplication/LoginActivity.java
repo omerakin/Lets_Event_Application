@@ -27,6 +27,10 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -134,22 +138,6 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void afterQueryProcessing(String usernameET, String passwordET) {
-        // You can access m2Status here reliably,
-        // assuming you only call this method
-        // as shown above, but you should still
-        // use defensive programming
-        if(passwordET.equals(passwordFromParse)){
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("Username", usernameET);
-            intent.putExtra("Password", passwordET);
-            startActivity(intent);
-        } else {
-            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Incorrect Email or Password!").setNeutralButton("Close", null).show();
-        }
-
-    }
-
     private void runQuery(final String usernameET, final String passwordET) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
         query.whereEqualTo("Email", usernameET);
@@ -174,6 +162,65 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void afterQueryProcessing(String usernameET, String passwordET) {
+        // You can access m2Status here reliably,
+        // assuming you only call this method
+        // as shown above, but you should still
+        // use defensive programming
+        if(passwordET.equals(passwordFromParse)){
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("Username", usernameET);
+            intent.putExtra("Password", passwordET);
+            startActivity(intent);
+        } else {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Incorrect Email or Password!").setNeutralButton("Close", null).show();
+        }
+
+    }
+
+    private void writeToFileUserInformation() {
+
+        //Write to file for saving username data
+        FileOutputStream fosUsername = null;
+        try {
+            fosUsername = openFileOutput("UsernameInfromation.txt", MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        final String usernameInformation = String.valueOf(etUsername.getText());
+        try {
+            System.out.println("usernameInformation........." + usernameInformation + "............");
+            fosUsername.write(usernameInformation.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fosUsername.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Write to file for saving password data
+        FileOutputStream fosPassword = null;
+        try {
+            fosPassword = openFileOutput("PasswordInfromation.txt", MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        final String passwordInformation = String.valueOf(etPassword.getText());
+        try {
+            System.out.println("passwordInformation........." + passwordInformation + "............");
+            fosPassword.write(passwordInformation.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fosPassword.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void onLogin(View view) {
 
         final String usernameET = String.valueOf(etUsername.getText());
@@ -184,6 +231,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please enter valid username and password!").setNeutralButton("Close", null).show();
         } else {
+            writeToFileUserInformation();
             runQuery(usernameET, passwordET);
         }
     }
