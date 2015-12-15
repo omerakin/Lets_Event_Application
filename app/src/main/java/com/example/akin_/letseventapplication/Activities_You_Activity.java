@@ -77,7 +77,6 @@ public class Activities_You_Activity extends AppCompatActivity {
                     userActions);
             // Binds the Adapter to the ListView
             listviewActions.setAdapter(adapter);
-
         }
 
 
