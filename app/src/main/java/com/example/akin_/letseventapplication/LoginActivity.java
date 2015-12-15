@@ -53,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginButton loginButton;
 
 
+    private String[] fbUserFullName;
     private String fbUserName;
     private String fbUserLastName;
     private String fbUserEmail;
@@ -94,14 +95,18 @@ public class LoginActivity extends AppCompatActivity {
                                 } else {
                                     Profile profile = Profile.getCurrentProfile();
                                     fbUserEmail = me.optString("id");
-                                    fbUserName = profile.getFirstName();
-                                    fbUserLastName = profile.getLastName();
+                                    fbUserFullName = me.optString("name").split("\\s+");
+                                    fbUserName = fbUserFullName[0];
+                                    fbUserLastName = fbUserFullName[1];
+                                    //fbUserName = profile.getFirstName();
+                                    //fbUserLastName = profile.getLastName();
                                     ParseObject testAccount = new ParseObject("TestAccount");
                                     testAccount.put("Email", fbUserEmail);
-                                    testAccount.put("Password", fbUserLastName+fbUserEmail+fbUserName);
+                                    testAccount.put("Password", fbUserEmail);
                                     testAccount.put("Name", fbUserName);
                                     testAccount.put("Lastname", fbUserLastName);
                                     testAccount.saveInBackground();
+                                    writeToFileUserInformation(fbUserEmail, fbUserEmail);
                                 }
                             }
                         }).executeAsync();
@@ -211,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void writeToFileUserInformation() {
+    private void writeToFileUserInformation(String usernameInformation, String passwordInformation) {
 
         //Write to file for saving username data
         FileOutputStream fosUsername = null;
@@ -220,7 +225,6 @@ public class LoginActivity extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        final String usernameInformation = String.valueOf(etUsername.getText());
         try {
             System.out.println("usernameInformation........." + usernameInformation + "............");
             fosUsername.write(usernameInformation.getBytes());
@@ -240,7 +244,6 @@ public class LoginActivity extends AppCompatActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        final String passwordInformation = String.valueOf(etPassword.getText());
         try {
             System.out.println("passwordInformation........." + passwordInformation + "............");
             fosPassword.write(passwordInformation.getBytes());
@@ -252,6 +255,27 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+/*
+        //Write to file for saving objectid
+        FileOutputStream fosPassword = null;
+        try {
+            fosPassword = openFileOutput("PasswordInfromation.txt", MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println("passwordInformation........." + passwordInformation + "............");
+            fosPassword.write(passwordInformation.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fosPassword.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        */
     }
 
     public void onLogin(View view) {
@@ -264,7 +288,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please enter valid username and password!").setNeutralButton("Close", null).show();
         } else {
-            writeToFileUserInformation();
+            writeToFileUserInformation(usernameET, passwordET);
             runQuery(usernameET, passwordET);
         }
     }
