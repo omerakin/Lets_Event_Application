@@ -26,7 +26,7 @@ public class Activities_Followed_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activities__followed_);
         //remote datatask async parse
-        new  RemoteDataTask().execute();
+        //new  RemoteDataTask().execute();
     }
     // create remotedatatask asynck task
     private class RemoteDataTask extends AsyncTask<Void, Void, Void> {

@@ -11,6 +11,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +25,39 @@ public class Activities_You_Activity extends AppCompatActivity {
     ProgressDialog mProgressDialog;
     ListViewAdapter_Requests adapter;
     private List<UserActions_Class> userActions = null;
+    String ObjectIdFromFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activities__you_);
         //remote datatask async parse
+        readObjectIdFromFile();
         new  RemoteDataTask().execute();
     }
+
+    private void readObjectIdFromFile() {
+        // Read ObjectId from file
+        FileInputStream fisObjectId = null;
+        try {
+            fisObjectId = openFileInput("ObjectidInfromation.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedInputStream bisObjectId = new BufferedInputStream(fisObjectId);
+        StringBuffer ObjectId = new StringBuffer();
+        try {
+            while (bisObjectId.available() != 0){
+                char next = (char) bisObjectId.read();
+                ObjectId.append(next);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ObjectIdFromFile = ObjectId.toString();
+    }
+
     // create remotedatatask asynck task
     private class RemoteDataTask extends AsyncTask<Void, Void, Void>{
         @Override
@@ -49,18 +78,20 @@ public class Activities_You_Activity extends AppCompatActivity {
             userActions = new ArrayList<UserActions_Class>();
             try {
                 // Locate the class table named "Country" in Parse.com
-                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
-                        "UserActions");
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("UserActions");
                 // Locate the column named "CommentID" in Parse.com and order list
                 // by ascending
                // query.orderByAscending("CommentID");
                 ob = query.find();
+
                 for (ParseObject pAction : ob) {
-                    UserActions_Class myAction = new UserActions_Class();
-                    myAction.setTypeOfAction((String) pAction.get("Type"));
-                    myAction.setActionBy((String) pAction.get("By"));
-                    myAction.setActionTo((String) pAction.get("To"));
-                    userActions.add(myAction);
+                    if (ObjectIdFromFile.equals(pAction.getString("By")) || ObjectIdFromFile.equals(pAction.getString("To"))) {
+                        UserActions_Class myAction = new UserActions_Class();
+                        myAction.setTypeOfAction((String) pAction.get("Type"));
+                        myAction.setActionBy((String) pAction.get("By"));
+                        myAction.setActionTo((String) pAction.get("To"));
+                        userActions.add(myAction);
+                    }
                 }
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
