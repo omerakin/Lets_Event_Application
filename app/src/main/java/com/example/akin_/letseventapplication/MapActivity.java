@@ -18,7 +18,10 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.twotoasters.clusterkraf.Clusterkraf;
+import com.twotoasters.clusterkraf.InputPoint;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -111,6 +114,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> parseEvent, ParseException e) {
                 if (e == null) {
+                    ArrayList<MarkerData> markerDatas = new ArrayList<MarkerData>();
+                    MarkerData markerData;
+                    ArrayList<InputPoint> inputPoints;
                     int len = parseEvent.size();
                     for (int i = 0; i < len; i++) {
                         //get the i th element of event in order to obtain details
@@ -128,12 +134,26 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             pCategory_Name = p.getString("Category_Name");
                             LatLng EventLatLng = new LatLng(pLatitude,pLongitude);
                             mMap.addMarker(new MarkerOptions().position(EventLatLng).title(pEvent_Name + "\n" + pCategory_Name));
+                            markerData = new MarkerData(EventLatLng);
+                            markerDatas.add(markerData);
 
                         } else if ((pLatitude == 555.0 && pLongitude  == 555.0) ||
                                             (pLatitude == 0.0 && pLongitude  == 0.0)){
                             // do not display
                         }
 
+                    }
+
+                    inputPoints = new ArrayList<InputPoint>(markerDatas.size());
+                    for (MarkerData data : markerDatas) {
+                        inputPoints.add( new InputPoint(data.getLatLng(), data));
+                    }
+                    Clusterkraf clusterkraf;
+
+                    if(inputPoints != null && inputPoints.size() > 0) {
+                        System.out.println("Burada...................................aaaa....................");
+                        com.twotoasters.clusterkraf.Options options = new com.twotoasters.clusterkraf.Options();
+                        clusterkraf = new Clusterkraf(mMap, options, inputPoints);
                     }
                 } else {
                     System.out.println("Error::: in getNearbyEvents()!");
@@ -142,6 +162,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
+    }
+
+
+    class MarkerData {
+        private LatLng latLng;
+
+        public MarkerData(LatLng latLng) {
+            this.latLng=latLng;
+        }
+
+        public LatLng getLatLng() {
+            return latLng;
+        }
     }
 
     @Override

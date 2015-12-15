@@ -4,9 +4,16 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -31,7 +38,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onRealSignup (View view) {
 
         // getting Et as a string
-        String emailET = String.valueOf(email.getText());
+        final String emailET = String.valueOf(email.getText());
         String passwordET = String.valueOf(password.getText());
         String confirmpasswordET = String.valueOf(confirmpassword.getText());
         String nameET = String.valueOf(name.getText());
