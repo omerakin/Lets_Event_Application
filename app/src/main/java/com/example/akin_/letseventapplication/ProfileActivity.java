@@ -105,6 +105,27 @@ public class ProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         PasswordString = Password.toString();
+
+        // Read ObjectId from file
+        FileInputStream fisObjectId = null;
+        try {
+            fisObjectId = openFileInput("ObjectidInfromation.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedInputStream bisObjectId = new BufferedInputStream(fisObjectId);
+        StringBuffer ObjectId = new StringBuffer();
+        try {
+            while (bisObjectId.available() != 0){
+                char next = (char) bisObjectId.read();
+                ObjectId.append(next);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("ObjectidInformation........." + ObjectId + "............");
+
     }
 
     private void getNameandLastnameFromParse() {

@@ -216,7 +216,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void writeToFileUserInformation(String usernameInformation, String passwordInformation) {
+    private void writeToFileUserInformation(final String usernameInformation, final String passwordInformation) {
 
         //Write to file for saving username data
         FileOutputStream fosUsername = null;
@@ -255,27 +255,56 @@ public class LoginActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-/*
-        //Write to file for saving objectid
-        FileOutputStream fosPassword = null;
-        try {
-            fosPassword = openFileOutput("PasswordInfromation.txt", MODE_PRIVATE);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            System.out.println("passwordInformation........." + passwordInformation + "............");
-            fosPassword.write(passwordInformation.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            fosPassword.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        */
+        //Write to file for saving objectid
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseAccounts, ParseException e) {
+                if (e == null) {
+                    int len = parseAccounts.size();
+                    for (int i = 0; i < len; i++) {
+                        //get the i th element of Accounts in order to obtain details
+                        ParseObject p = parseAccounts.get(i);
+
+                        //get the detail information of userAccount
+                        String pEmail = p.getString("Email");
+                        String pPassword = p.getString("Password");
+                        String pObjectId;
+
+                        if(pEmail.equals(usernameInformation) && pPassword.equals(passwordInformation)){
+                            pObjectId = p.getObjectId();
+                            System.out.println("pObjectId........." + pObjectId + "............" + pObjectId);
+                            FileOutputStream fosObjectid = null;
+                            try {
+                                fosObjectid = openFileOutput("ObjectidInfromation.txt", MODE_PRIVATE);
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            }
+                            try {
+                                System.out.println("ObjectidInformation........." + pObjectId + "............");
+                                fosObjectid.write(pObjectId.getBytes());
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                            try {
+                                fosObjectid.close();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                            return;
+                        }
+
+                    }
+                } else {
+                    System.out.println("Error::: in writeToFileUserInformation()-->Parse!");
+
+                }
+            }
+        });
+
+
+
+
     }
 
     public void onLogin(View view) {
