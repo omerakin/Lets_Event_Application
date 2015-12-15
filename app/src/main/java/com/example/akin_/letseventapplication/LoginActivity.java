@@ -20,6 +20,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.parse.FindCallback;
@@ -83,20 +84,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 //Add parse.com
                 //...
-               /* GraphRequestAsyncTask request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject user, GraphResponse graphResponse) {
-                        fbUserEmail = user.optString("email");
-                        fbUserName = user.optString("name");
-                        fbUserLastName = user.optString("id");
-                        ParseObject testAccount = new ParseObject("TestAccount");
-                        testAccount.put("Email", fbUserEmail);
-                        testAccount.put("Password", fbUserLastName+fbUserName);
-                        testAccount.put("Name", fbUserName);
-                        testAccount.put("Lastname", fbUserLastName);
-                        testAccount.saveInBackground();
-                    }
-                }).executeAsync();*/
                 GraphRequest.newMeRequest(
                         loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
@@ -105,9 +92,10 @@ public class LoginActivity extends AppCompatActivity {
                                 if (response.getError() != null) {
                                     // handle error
                                 } else {
+                                    Profile profile = Profile.getCurrentProfile();
                                     fbUserEmail = me.optString("id");
-                                    fbUserName = me.optString("first_name");
-                                    fbUserLastName = me.optString("last_name");
+                                    fbUserName = profile.getFirstName();
+                                    fbUserLastName = profile.getLastName();
                                     ParseObject testAccount = new ParseObject("TestAccount");
                                     testAccount.put("Email", fbUserEmail);
                                     testAccount.put("Password", fbUserLastName+fbUserEmail+fbUserName);
