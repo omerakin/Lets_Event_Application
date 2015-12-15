@@ -17,6 +17,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
+import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
@@ -27,6 +28,8 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -48,6 +51,12 @@ public class LoginActivity extends AppCompatActivity {
     private TextView info;
     private LoginButton loginButton;
 
+
+    private String fbUserName;
+    private String fbUserLastName;
+    private String fbUserEmail;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         info = (TextView)findViewById(R.id.info);
         loginButton = (LoginButton)findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -73,9 +83,44 @@ public class LoginActivity extends AppCompatActivity {
 
                 //Add parse.com
                 //...
+               /* GraphRequestAsyncTask request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject user, GraphResponse graphResponse) {
+                        fbUserEmail = user.optString("email");
+                        fbUserName = user.optString("name");
+                        fbUserLastName = user.optString("id");
+                        ParseObject testAccount = new ParseObject("TestAccount");
+                        testAccount.put("Email", fbUserEmail);
+                        testAccount.put("Password", fbUserLastName+fbUserName);
+                        testAccount.put("Name", fbUserName);
+                        testAccount.put("Lastname", fbUserLastName);
+                        testAccount.saveInBackground();
+                    }
+                }).executeAsync();*/
+                GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject me, GraphResponse response) {
+
+                                if (response.getError() != null) {
+                                    // handle error
+                                } else {
+                                    fbUserEmail = me.optString("id");
+                                    fbUserName = me.optString("first_name");
+                                    fbUserLastName = me.optString("last_name");
+                                    ParseObject testAccount = new ParseObject("TestAccount");
+                                    testAccount.put("Email", fbUserEmail);
+                                    testAccount.put("Password", fbUserLastName+fbUserEmail+fbUserName);
+                                    testAccount.put("Name", fbUserName);
+                                    testAccount.put("Lastname", fbUserLastName);
+                                    testAccount.saveInBackground();
+                                }
+                            }
+                        }).executeAsync();
 
 
-                Intent intent = new Intent(LoginActivity.this ,MainActivity.class);
+
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
 
 
