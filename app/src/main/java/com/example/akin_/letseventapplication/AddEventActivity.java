@@ -31,6 +31,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -57,6 +60,7 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
     ArrayAdapter<CharSequence> arrayAdapterCategory, arrayAdapterType;
     private double LatitudeOfLocation;
     private double LongitudeOfLocation;
+    private String ObjectIdOfUser;
 
     private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
@@ -204,6 +208,9 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
         //get the latitude and longitude of location
         getLatitudeLongitudeOfLocation(locationET);
 
+        // Read ObjectId from file
+        readObjectIdFromFile();
+
         System.out.println("LatitudeOfLocation........" + LatitudeOfLocation + "...................");
         System.out.println("LongitudeOfLocation........" + LongitudeOfLocation + "...................");
 
@@ -241,6 +248,7 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
             testAccount.put("Category_Name", CategoryName);
             testAccount.put("Type_Name", TypeName);
             testAccount.put("Description", descriptionET);
+            testAccount.put("Event_Creater", ObjectIdOfUser);
             testAccount.saveInBackground();
 
             // Show added message to user
@@ -268,6 +276,31 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
             */
         }
 
+    }
+
+    private void readObjectIdFromFile() {
+
+        // Read ObjectId from file
+        FileInputStream fisObjectId = null;
+        try {
+            fisObjectId = openFileInput("ObjectidInfromation.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedInputStream bisObjectId = new BufferedInputStream(fisObjectId);
+        StringBuffer ObjectId = new StringBuffer();
+        try {
+            while (bisObjectId.available() != 0){
+                char next = (char) bisObjectId.read();
+                ObjectId.append(next);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ObjectIdOfUser = ObjectId.toString();
+
+        System.out.println("ObjectidInformation........." + ObjectId + "............");
     }
 
     @Override
