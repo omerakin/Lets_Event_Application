@@ -78,8 +78,6 @@ public class Activities_Followed_Activity extends AppCompatActivity {
 
                     }
 
-
-
                     //add to list
                     userActionsFollowed.add(myAction);
                 }

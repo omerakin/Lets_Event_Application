@@ -112,8 +112,6 @@ public class Activities_You_Activity extends AppCompatActivity {
 
                         }
 
-
-
                         //add to list
 
                         userActions.add(myAction);
