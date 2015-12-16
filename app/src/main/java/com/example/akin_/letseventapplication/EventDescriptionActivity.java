@@ -1,6 +1,7 @@
 package com.example.akin_.letseventapplication;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,10 @@ public class EventDescriptionActivity extends AppCompatActivity {
     String[] commentUser ;
     String[] commentCreationDate ;
     String[] commentComment ;
+    ListView listviewActions;
+    List<ParseObject> ob;
+    ListViewAdapter_Comments adapter;
+    private List<Comment2_Class> userComments = null;
 
 
     List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
@@ -40,10 +45,65 @@ public class EventDescriptionActivity extends AppCompatActivity {
         tww = (TextView)findViewById(R.id.textView9);
         info3 =(TextView)findViewById(R.id.info3);
         buttonComment = (Button)findViewById(R.id.buttonComment);
-        tww.setText(tww.getText()+ intent.getStringExtra("name"));
-        runQuery();
+        tww.setText(tww.getText() + intent.getStringExtra("name"));
+        //runQuery();
+        new RemoteDataTask().execute();
 
     }
+
+    // create remotedatatask asynck task
+    private class RemoteDataTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(Void... params){
+            //create arraylist
+            userComments = new ArrayList<Comment2_Class>();
+            try {
+                // Locate the class table named "Country" in Parse.com
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Comments");
+                // Locate the column named "CommentID" in Parse.com and order list
+                // by ascending
+                // query.orderByAscending("CommentID");
+                ob = query.find();
+
+                for (ParseObject pAction : ob) {
+                        Comment2_Class myAction = new Comment2_Class();
+                        myAction.setUser((String) pAction.get("User"));
+                        myAction.setCreatedAt(pAction.getCreatedAt().toString());
+                        myAction.setComment((String) pAction.get("Comment"));
+
+
+                    userComments.add(myAction);
+
+                }
+            } catch (ParseException e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            // Locate the listview in listview .xml
+            listviewActions = (ListView) findViewById(R.id.listView2);
+            // Pass the results into ListViewAdapter.java
+            adapter = new ListViewAdapter_Comments(EventDescriptionActivity.this,
+                    userComments);
+            // Binds the Adapter to the ListView
+            listviewActions.setAdapter(adapter);
+        }
+
+
+    }
+
+
+
+
+
+
     private void runQuery() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
         query.findInBackground(new FindCallback<ParseObject>() {

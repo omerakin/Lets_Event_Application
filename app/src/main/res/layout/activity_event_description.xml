@@ -110,30 +110,20 @@
         android:layout_toLeftOf="@+id/buttonComment"
         android:layout_toStartOf="@+id/buttonComment" />
 
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView3"
-        android:layout_below="@id/commentBox"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:fillViewport="false">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comments :"
             android:id="@+id/info3"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/commentBox"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
-    </ScrollView>
+            android:layout_alignParentStart="true" />
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView2"
-        android:layout_below="@+id/scrollView3"
         tools:listitem="@layout/listviewcomment_layout"
+        android:layout_below="@+id/info3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

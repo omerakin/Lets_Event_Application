@@ -10,8 +10,9 @@ public class Comment_Class {
     private int comment_id;
     private double comment_point;
     private String comment;
+    private String createdAt;
 
-    public  Comment_Class (String event_id, String profile_id, int comment_id, double comment_point, String comment) {
+    public  Comment_Class (String event_id, String profile_id, int comment_id, double comment_point, String comment, String createdAt) {
 
         this.event_id = event_id;
         this.profile_id = profile_id;
@@ -20,6 +21,17 @@ public class Comment_Class {
         this.comment =comment;
 
     }
+    public  Comment_Class (){
+
+    }
+    public String getcreatedAt() {
+        return createdAt;
+    }
+
+    public void setcreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
 
     public String getEvent_id() {
         return event_id;
