@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -26,6 +27,7 @@ public class Activities_You_Activity extends AppCompatActivity {
     ListViewAdapter_Requests adapter;
     private List<UserActions_Class> userActions = null;
     String ObjectIdFromFile;
+    List<ParseObject> obTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,27 @@ public class Activities_You_Activity extends AppCompatActivity {
                         myAction.setTypeOfAction((String) pAction.get("Type"));
                         myAction.setActionBy((String) pAction.get("By"));
                         myAction.setActionTo((String) pAction.get("To"));
+
+
+                        //Pasre object ids transformed to names
+
+                        ParseObject temp;
+                        ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>("TestAccount");
+                        temp = query2.get(myAction.getActionBy());
+                        myAction.setActionBy( temp.get("Name") + " "+ temp.get("Lastname"));
+
+                        if(myAction.getTypeOfAction().equals("FriendRequest")) {
+                            ParseQuery<ParseObject> query3 = new ParseQuery<ParseObject>("TestAccount");
+                            temp = query3.get(myAction.getActionTo());
+                            myAction.setActionTo(temp.get("Name") + " "+ temp.get("Lastname"));
+                        }else {
+                            ParseQuery<ParseObject> query4 = new ParseQuery<ParseObject>("TestEvent");
+                            temp = query4.get(myAction.getActionTo());
+                            myAction.setActionTo((String)temp.get("Event_Name"));
+
+                        }
+                        //add to list
+
                         userActions.add(myAction);
                     }
                 }
@@ -112,8 +135,6 @@ public class Activities_You_Activity extends AppCompatActivity {
 
 
     }
-
-
     @Override
     public void onBackPressed() {
     }
