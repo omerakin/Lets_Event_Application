@@ -12,6 +12,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.FindCallback;
@@ -114,9 +116,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> parseEvent, ParseException e) {
                 if (e == null) {
-                    ArrayList<MarkerData> markerDatas = new ArrayList<MarkerData>();
-                    MarkerData markerData;
-                    ArrayList<InputPoint> inputPoints;
                     int len = parseEvent.size();
                     for (int i = 0; i < len; i++) {
                         //get the i th element of event in order to obtain details
@@ -127,33 +126,84 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         double pLongitude = p.getDouble("Longitude");
                         String pEvent_Name;
                         String pCategory_Name;
+                        BitmapDescriptor pPicture;
 
                         if(((latitude - pLatitude <= 1) || (latitude - pLatitude <= -1)) &&
                                 ((longitude - pLongitude <= 1) || (longitude - pLongitude <= -1))){
                             pEvent_Name = p.getString("Event_Name");
+                            pEvent_Name = pEvent_Name.substring(0,1).toUpperCase() + pEvent_Name.substring(1);
                             pCategory_Name = p.getString("Category_Name");
                             LatLng EventLatLng = new LatLng(pLatitude,pLongitude);
-                            mMap.addMarker(new MarkerOptions().position(EventLatLng).title(pEvent_Name + "\n" + pCategory_Name));
-                            markerData = new MarkerData(EventLatLng);
-                            markerDatas.add(markerData);
-
-                        } else if ((pLatitude == 555.0 && pLongitude  == 555.0) ||
-                                            (pLatitude == 0.0 && pLongitude  == 0.0)){
-                            // do not display
+                            // set the picture of event
+                            if (pCategory_Name.equals("Birthday")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.birthday);
+                            } else if (pCategory_Name.equals("Concerts")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.concerts);
+                            } else if (pCategory_Name.equals("Conferences")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.conference);
+                            } else if (pCategory_Name.equals("Comedy Events")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.comedyevents);
+                            } else if (pCategory_Name.equals("Education")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.education);
+                            } else if (pCategory_Name.equals("Family")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.family);
+                            } else if (pCategory_Name.equals("Festivals")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.festivals);
+                            } else if (pCategory_Name.equals("Film")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.film);
+                            } else if (pCategory_Name.equals("Food - Wine")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.food_wine);
+                            } else if (pCategory_Name.equals("Fundraising - Charity")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.fundraising);
+                            } else if (pCategory_Name.equals("Art Galleries - Exhibits")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.exhibits);
+                            } else if (pCategory_Name.equals("Health - Wellness")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.health);
+                            } else if (pCategory_Name.equals("Holiday Events")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.holiday);
+                            } else if (pCategory_Name.equals("Kids")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.kids);
+                            } else if (pCategory_Name.equals("Literary - Books")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.literary);
+                            } else if (pCategory_Name.equals("Museums - Attractions")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.museums);
+                            } else if (pCategory_Name.equals("Business - Networking")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.bussiness);
+                            } else if (pCategory_Name.equals("Nightlife - Singles")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.nightlife);
+                            } else if (pCategory_Name.equals("University - Alumni")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.university);
+                            } else if (pCategory_Name.equals("Organizations - Meetups")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.organizations);
+                            } else if (pCategory_Name.equals("Outdoors - Recreation")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.outdoors);
+                            } else if (pCategory_Name.equals("Performing Arts")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.performing);
+                            } else if (pCategory_Name.equals("Pets")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.pets);
+                            } else if (pCategory_Name.equals("Politics - Activism")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.politics);
+                            } else if (pCategory_Name.equals("Sales - Retail")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.retail);
+                            } else if (pCategory_Name.equals("Science")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.science);
+                            } else if (pCategory_Name.equals("Religion - Spirituality")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.religion);
+                            } else if (pCategory_Name.equals("Sports")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.sports);
+                            } else if (pCategory_Name.equals("Technology")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.teknoloji);
+                            } else if (pCategory_Name.equals("Tour Dates")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.tours);
+                            } else if (pCategory_Name.equals("Tradeshows")) {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.tradeshow);
+                            } else {
+                                pPicture = BitmapDescriptorFactory.fromResource(R.drawable.other);
+                            }
+                            //Add to map depends on what kind of event it is.
+                            mMap.addMarker(new MarkerOptions().position(EventLatLng).title(pEvent_Name)).setIcon(pPicture);
                         }
 
-                    }
-
-                    inputPoints = new ArrayList<InputPoint>(markerDatas.size());
-                    for (MarkerData data : markerDatas) {
-                        inputPoints.add( new InputPoint(data.getLatLng(), data));
-                    }
-                    Clusterkraf clusterkraf;
-
-                    if(inputPoints != null && inputPoints.size() > 0) {
-                        System.out.println("Burada...................................aaaa....................");
-                        com.twotoasters.clusterkraf.Options options = new com.twotoasters.clusterkraf.Options();
-                        clusterkraf = new Clusterkraf(mMap, options, inputPoints);
                     }
                 } else {
                     System.out.println("Error::: in getNearbyEvents()!");
@@ -162,19 +212,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             }
         });
 
-    }
-
-
-    class MarkerData {
-        private LatLng latLng;
-
-        public MarkerData(LatLng latLng) {
-            this.latLng=latLng;
-        }
-
-        public LatLng getLatLng() {
-            return latLng;
-        }
     }
 
     @Override
