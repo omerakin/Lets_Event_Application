@@ -77,7 +77,6 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                         myAction.setActionTo((String)temp.get("Event_Name"));
 
                     }
-
                     //add to list
                     userActionsFollowed.add(myAction);
                 }

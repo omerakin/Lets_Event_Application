@@ -111,7 +111,6 @@ public class Activities_You_Activity extends AppCompatActivity {
                             myAction.setActionTo((String)temp.get("Event_Name"));
 
                         }
-
                         //add to list
 
                         userActions.add(myAction);
