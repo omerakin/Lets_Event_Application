@@ -1,12 +1,17 @@
 package com.example.akin_.letseventapplication;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -33,7 +38,18 @@ public class EventDescriptionActivity extends AppCompatActivity {
     List<ParseObject> ob;
     ListViewAdapter_Comments adapter;
     private List<Comment2_Class> userComments = null;
+    String eventObjectId;
+    String eventCreator;
 
+    //Textviews of events declare
+    TextView dEventDateLabel;
+    TextView dEventLocationLabel;
+    TextView dEventDescriptionLabel;
+    TextView dEventCreatorLabel;
+    TextView dEventTypeLabel;
+    ImageView dEventPicture;
+
+    EditText commentBox;
 
     List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
 
@@ -42,10 +58,32 @@ public class EventDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_description);
         Intent intent = getIntent();
-        tww = (TextView)findViewById(R.id.textView9);
+        tww = (TextView)findViewById(R.id.dEventNameLabel);
         info3 =(TextView)findViewById(R.id.info3);
         buttonComment = (Button)findViewById(R.id.buttonComment);
-        tww.setText(tww.getText() + intent.getStringExtra("name"));
+        eventObjectId = intent.getStringExtra("parseObjectId");
+        commentBox = (EditText)findViewById(R.id.commentBox);
+
+        dEventDateLabel = (TextView)findViewById(R.id.dEventDateLabel);
+        dEventLocationLabel = (TextView)findViewById(R.id.dEventLocationLabel);
+        dEventDescriptionLabel = (TextView)findViewById(R.id.dEventDescriptionLabel);
+        dEventCreatorLabel = (TextView)findViewById(R.id.dEventCreatorLabel);
+        dEventTypeLabel = (TextView)findViewById(R.id.dEventTypeLabel);
+        eventCreator =intent.getStringExtra("pECreator");
+
+        dEventDateLabel.setText(intent.getStringExtra("pEDate"));
+        dEventLocationLabel.setText(intent.getStringExtra("pELocation") );
+        dEventDescriptionLabel.setText(dEventDescriptionLabel.getText() +" "+ intent.getStringExtra("pEDescription") );
+        //dEventCreatorLabel.setText(dEventCreatorLabel.getText() + " " + eventCreator);
+        dEventTypeLabel.setText(dEventTypeLabel.getText() +" "+ intent.getStringExtra("pEType") );
+        tww.setText(tww.getText() +" "+ intent.getStringExtra("pEName") );
+
+        dEventPicture = (ImageView)findViewById(R.id.imageView);
+        String mDrawableName = intent.getStringExtra("pEPicture");
+        int dEpic =  Integer.parseInt(mDrawableName);
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), dEpic);
+        dEventPicture.setImageDrawable(drawable);
+
         //runQuery();
         new RemoteDataTask().execute();
 
@@ -67,8 +105,8 @@ public class EventDescriptionActivity extends AppCompatActivity {
                 // Locate the column named "CommentID" in Parse.com and order list
                 // by ascending
                 // query.orderByAscending("CommentID");
+                query.whereEqualTo("Event",eventObjectId);
                 ob = query.find();
-
                 for (ParseObject pAction : ob) {
                         Comment2_Class myAction = new Comment2_Class();
                         myAction.setUser((String) pAction.get("User"));
@@ -79,6 +117,12 @@ public class EventDescriptionActivity extends AppCompatActivity {
                     userComments.add(myAction);
 
                 }
+                ParseObject temp;
+                ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>("TestAccount");
+                temp = query2.get(eventCreator);
+                eventCreator = temp.get("Name") + " "+ temp.get("Lastname");
+
+
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
                 e.printStackTrace();
@@ -87,6 +131,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void result) {
+            dEventCreatorLabel.setText("Creator: " + " " + eventCreator);
             // Locate the listview in listview .xml
             listviewActions = (ListView) findViewById(R.id.listView2);
             // Pass the results into ListViewAdapter.java
@@ -162,10 +207,13 @@ public class EventDescriptionActivity extends AppCompatActivity {
     public void commentPressed(View view){
         ParseObject testAccount = new ParseObject("Comments");
         testAccount.put("User", "deneme");
-        testAccount.put("Event", "deneme");
-        testAccount.put("Comment", "deneme");
-        testAccount.put("CommentID", "15");
+        testAccount.put("Event", eventObjectId);
+        testAccount.put("Comment", String.valueOf(commentBox.getText()));
+        testAccount.put("CommentID", String.valueOf(listviewActions.getAdapter().getCount()));
         testAccount.saveInBackground();
+        commentBox.setText("");
+        new RemoteDataTask().execute();
+
     }
 
 }

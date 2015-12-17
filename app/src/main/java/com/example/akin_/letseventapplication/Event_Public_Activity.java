@@ -127,10 +127,24 @@ public class Event_Public_Activity extends AppCompatActivity {
                             SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
 
                             // Getting a reference to listview of main.xml layout file
-                            ListView listView = (ListView) findViewById(R.id.listView);
+                            final ListView listView = (ListView) findViewById(R.id.listView);
 
                             // Setting the adapter to the listView
                             listView.setAdapter(adapter);
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                public void onItemClick(AdapterView<?> parent, View view,
+                                                        int position, long id) {
+
+                                    int posbug = position;
+                                    Object asd = listView.getItemAtPosition(position);
+                                    Intent intent = new Intent(Event_Public_Activity.this, EventDescriptionActivity.class);
+                                    intent.putExtra("name", Integer.toString(position));
+                                    startActivity(intent);
+
+                                }
+
+                            });
 
 
                         }
@@ -159,10 +173,26 @@ public class Event_Public_Activity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
 
-                    int posbug = position;
+                    String parseObj = aList.get(position).get("objectId");
+                    String pEDate = aList.get(position).get("cur");
+                    String pEName = aList.get(position).get("txt");
+                    String pELocation = aList.get(position).get("pla");
+                    String pEDescription = aList.get(position).get("eventDescription");
+                    String pECreator = aList.get(position).get("eventCreator");
+                    String pEType = aList.get(position).get("eventType");
+                    String pEPicture = aList.get(position).get("flag");
+
                     Object asd = listView.getItemAtPosition(position);
                     Intent intent = new Intent(Event_Public_Activity.this, EventDescriptionActivity.class);
                     intent.putExtra("name", Integer.toString(position));
+                    intent.putExtra("pEDate", pEDate);
+                    intent.putExtra("pEName", pEName);
+                    intent.putExtra("pELocation", pELocation);
+                    intent.putExtra("pEDescription", pEDescription);
+                    intent.putExtra("pECreator", pECreator);
+                    intent.putExtra("pEPicture", pEPicture);
+                    intent.putExtra("pEType", pEType);
+                    intent.putExtra("parseObjectId", parseObj);
                     startActivity(intent);
 
                 }
@@ -189,6 +219,10 @@ public class Event_Public_Activity extends AppCompatActivity {
                         String pLocation = p.getString("Location");
                         String pDate = p.getString("Start_Date") + "  " + p.getString("Start_Time");
                         String pPicture = Integer.toString(R.drawable.other);
+                        String pEventObjectId = p.getObjectId();
+                        String pEventDescription = p.getString("Description");
+                        String pEventCreator = p.getString("Event_Creater");
+                        String pEventType = p.getString("Category_Name");
 
                         // set the picture of event
                         if (p.getString("Category_Name").equals("Birthday")) {
@@ -258,7 +292,7 @@ public class Event_Public_Activity extends AppCompatActivity {
                         }
 
                         //set other adjustments
-                        afterQueryProcessing(pName, pLocation, pDate, pPicture);
+                        afterQueryProcessing(pName, pLocation, pDate, pPicture, pEventObjectId, pEventDescription, pEventCreator, pEventType);
 
                     }
                 } else {
@@ -270,7 +304,8 @@ public class Event_Public_Activity extends AppCompatActivity {
 
     }
 
-    private void afterQueryProcessing(String pname, String plocation, String pdate, String ppicture) {
+    private void afterQueryProcessing(String pname, String plocation, String pdate, String ppicture, String pEventObjectId,
+                                        String pEventDescription, String pEventCreator, String pEventType) {
         // You can access m2Status here reliably,
         // assuming you only call this method
         // as shown above, but you should still
@@ -280,6 +315,12 @@ public class Event_Public_Activity extends AppCompatActivity {
         hm.put("cur","Date : " + pdate);
         hm.put("flag", ppicture );
         hm.put("pla", "Location : " + plocation);
+
+
+        hm.put("eventDescription", pEventDescription);
+        hm.put("eventCreator", pEventCreator);
+        hm.put("eventType", pEventType);
+        hm.put("objectId", pEventObjectId);
         aList.add(hm);
 // Keys used in Hashmap
         String[] from = {"flag", "txt", "cur", "pla"};
