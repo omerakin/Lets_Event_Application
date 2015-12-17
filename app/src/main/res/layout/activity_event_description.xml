@@ -10,119 +10,134 @@
         android:id="@+id/svScroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeDes">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Name:"
-        android:id="@+id/dEventNameLabel"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Date and Time:"
-        android:id="@+id/dEventDateLabel"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Location:"
-        android:id="@+id/dEventLocationLabel"
-        android:layout_below="@+id/dEventDateLabel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dEventNameLabel"
-        android:layout_alignEnd="@+id/dEventNameLabel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Description: "
-        android:id="@+id/dEventDescriptionLabel"
-        android:layout_below="@+id/dEventLocationLabel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dEventNameLabel"
-        android:layout_alignEnd="@+id/dEventNameLabel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Creator:"
-        android:id="@+id/dEventCreatorLabel"
-        android:layout_below="@+id/dEventDescriptionLabel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dEventNameLabel"
-        android:layout_alignEnd="@+id/dEventNameLabel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Type:"
-        android:id="@+id/dEventTypeLabel"
-        android:layout_below="@+id/dEventCreatorLabel"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/dEventNameLabel"
-        android:layout_alignEnd="@+id/dEventNameLabel" />
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Comment"
-        android:id="@+id/buttonComment"
-        android:onClick="commentPressed"
-        android:layout_below="@+id/dEventTypeLabel"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/commentBox"
-        android:hint="Comment here"
-        android:layout_below="@+id/dEventTypeLabel"
-        android:layout_toLeftOf="@+id/buttonComment"
-        android:layout_toStartOf="@+id/buttonComment"/>
-
-        <TextView
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Comments :"
-            android:id="@+id/info3"
-            android:layout_below="@+id/commentBox"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-    </RelativeLayout>
+            android:id="@+id/relativeDes">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@drawable/birthday"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="right">
+            <Button
+                android:layout_width="100sp"
+                android:layout_height="50sp"
+                android:text="Attend"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@+id/imageView"
+                android:layout_alignBottom="@+id/imageView"
+                android:onClick="attendPressed"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Name:"
+                android:id="@+id/dEventNameLabel"
+                android:layout_below="@+id/imageView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Date and Time:"
+                android:id="@+id/dEventDateLabel"
+                android:layout_below="@+id/dEventNameLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Location:"
+                android:id="@+id/dEventLocationLabel"
+                android:layout_below="@+id/dEventDateLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/dEventNameLabel"
+                android:layout_alignEnd="@+id/dEventNameLabel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Description: "
+                android:id="@+id/dEventDescriptionLabel"
+                android:layout_below="@+id/dEventLocationLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/dEventNameLabel"
+                android:layout_alignEnd="@+id/dEventNameLabel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Creator:"
+                android:id="@+id/dEventCreatorLabel"
+                android:layout_below="@+id/dEventDescriptionLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/dEventNameLabel"
+                android:layout_alignEnd="@+id/dEventNameLabel" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Type:"
+                android:id="@+id/dEventTypeLabel"
+                android:layout_below="@+id/dEventCreatorLabel"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/dEventNameLabel"
+                android:layout_alignEnd="@+id/dEventNameLabel" />
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Comment"
+                android:id="@+id/buttonComment"
+                android:onClick="commentPressed"
+                android:layout_below="@+id/dEventTypeLabel"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/commentBox"
+                android:hint="Comment here"
+                android:layout_below="@+id/dEventTypeLabel"
+                android:layout_toLeftOf="@+id/buttonComment"
+                android:layout_toStartOf="@+id/buttonComment"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Comments :"
+                    android:id="@+id/info3"
+                    android:layout_below="@+id/commentBox"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+        </RelativeLayout>
     </ScrollView>
 
     <ListView

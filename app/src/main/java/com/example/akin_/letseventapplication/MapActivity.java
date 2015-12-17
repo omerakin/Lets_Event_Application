@@ -98,8 +98,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         //latitude = myLocation.getLatitude();
         //longitude = myLocation.getLongitude();
 
-        latitude = 41.195160;
-        longitude = 29.050421;
+        latitude = 41.207189;
+        longitude = 29.076012;
 
         // Add a marker in myCoordinates and move the camera
         LatLng myCoordinates = new LatLng(latitude, longitude);

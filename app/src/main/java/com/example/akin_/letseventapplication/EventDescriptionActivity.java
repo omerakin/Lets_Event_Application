@@ -156,11 +156,6 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-
     private void runQuery() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Comments");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -188,6 +183,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         });
 
     }
+
     private void afterQueryProcessing(String pname, String pcomment, String pdate, String pnumber) {
         // You can access m2Status here reliably,
         // assuming you only call this method
@@ -234,8 +230,9 @@ public class EventDescriptionActivity extends AppCompatActivity {
         commentBox.setText("");
         new RemoteDataTask().execute();
     }
+
     public void attendPressed(View view){
-        String asd;
+
         ParseObject testAccount = new ParseObject("Comments");
         testAccount.put("User", NameLastname);
         testAccount.put("Event", eventObjectId);
@@ -250,7 +247,6 @@ public class EventDescriptionActivity extends AppCompatActivity {
         commentBox.setText("");
         new RemoteDataTask().execute();
     }
-
 
     private void readObjectIdFromFile() {
 
