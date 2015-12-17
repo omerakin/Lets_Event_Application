@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private String fbUserName;
     private String fbUserLastName;
     private String fbUserEmail;
+    private String fbUserSex;
 
 
     @Override
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        //Facebook
+        //facebook
         callbackManager = CallbackManager.Factory.create();
         boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
         if(loggedIn) {
@@ -98,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                                     fbUserFullName = me.optString("name").split("\\s+");
                                     fbUserName = fbUserFullName[0];
                                     fbUserLastName = fbUserFullName[1];
+                                    fbUserSex = "Facebook";
                                     //fbUserName = profile.getFirstName();
                                     //fbUserLastName = profile.getLastName();
                                     ParseObject testAccount = new ParseObject("TestAccount");
@@ -105,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                                     testAccount.put("Password", fbUserEmail);
                                     testAccount.put("Name", fbUserName);
                                     testAccount.put("Lastname", fbUserLastName);
+                                    testAccount.put("Sex", fbUserSex);
                                     testAccount.saveInBackground();
                                     writeToFileUserInformation(fbUserEmail, fbUserEmail);
                                 }

@@ -7,6 +7,11 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="facebook_app_id">1707175919518560</string>
     <string name="title_activity_event__information_">Event_Information_Activity</string>
+    <string-array name="sex_names">
+        <item>Sex</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
     <string-array name="category_names">
         <item>Category</item>
         <item>Birthday</item>

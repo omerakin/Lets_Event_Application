@@ -72,6 +72,15 @@
                 android:textColorHint="#ffffff"
                 android:layout_marginTop="15sp"/>
 
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/sex"
+                android:background="#80000000"
+                android:textColor="#ffffff"
+                android:layout_marginTop="15sp"/>
+
             <Button
                 android:padding="10sp"
                 android:layout_width="fill_parent"

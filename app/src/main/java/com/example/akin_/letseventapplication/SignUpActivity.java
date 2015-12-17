@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,6 +24,8 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText confirmpassword;
     private EditText name;
     private EditText lastname;
+    private Spinner spinnersex;
+    ArrayAdapter<CharSequence> arrayAdapterSex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,10 @@ public class SignUpActivity extends AppCompatActivity {
         confirmpassword = (EditText) findViewById(R.id.confirmpassword);
         name = (EditText) findViewById(R.id.name);
         lastname = (EditText) findViewById(R.id.lastname);
+        spinnersex = (Spinner) findViewById(R.id.sex);
+        spinnersex.setSelection(0);
+        arrayAdapterSex = ArrayAdapter.createFromResource(this, R.array.sex_names, R.layout.spinner_item);
+        spinnersex.setAdapter(arrayAdapterSex);
     }
 
     public void onRealSignup (View view) {
@@ -43,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         String confirmpasswordET = String.valueOf(confirmpassword.getText());
         String nameET = String.valueOf(name.getText());
         String lastnameET = String.valueOf(lastname.getText());
+        String CategoryName = spinnersex.getSelectedItem().toString();
 
         //check the validatiy of fields
         if (emailET.trim().length()==0){
@@ -57,6 +66,8 @@ public class SignUpActivity extends AppCompatActivity {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please enter valid last name!").setNeutralButton("Close", null).show();
         } else if (!passwordET.equals(confirmpasswordET)) {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Password and confirm password are not matched!").setNeutralButton("Close", null).show();
+        } else if (CategoryName.equals(spinnersex.getItemAtPosition(0))) {
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please select a gender!").setNeutralButton("Close", null).show();
         } else {
             //if every field is okey, then
             //save to the Parse
@@ -65,6 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
             testAccount.put("Password", passwordET);
             testAccount.put("Name", nameET);
             testAccount.put("Lastname", lastnameET);
+            testAccount.put("Sex", spinnersex);
             testAccount.saveInBackground();
 
             Intent intent = new Intent(this,MainActivity.class);

@@ -4,7 +4,7 @@ import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -21,14 +21,17 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView NameLastname;
-    String UsernameString;
-    String PasswordString;
+    private TextView NameLastname;
+    private String UsernameString;
+    private String PasswordString;
+    private ImageButton imageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        imageButton = (ImageButton) findViewById(R.id.profilePictureButton);
 
 
         TabHost tabHost3 = (TabHost) findViewById(R.id.tabHost3);
@@ -60,8 +63,47 @@ public class ProfileActivity extends AppCompatActivity {
         pastEventsTextView.setTextSize(10);
 
 
+        setProfilePicture();
         setNameAndLastnameOfUser();
         getNameandLastnameFromParse();
+
+
+    }
+
+    private void setProfilePicture() {
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseAccounts, ParseException e) {
+                if (e == null) {
+                    int len = parseAccounts.size();
+                    for (int i = 0; i < len; i++) {
+                        //get the i th element of Accounts in order to obtain details
+                        ParseObject p = parseAccounts.get(i);
+
+                        //get the detail information of userAccount
+                        String pEmail = p.getString("Email");
+                        String pPassword = p.getString("Password");
+                        String pSex;
+
+                        if(pEmail.equals(UsernameString) && pPassword.equals(PasswordString)){
+                            pSex = p.getString("Sex");
+                            if (pSex.equals("Female")){
+                                imageButton.setImageResource(R.mipmap.female);
+                            } else if (pSex.equals("Male")) {
+                                imageButton.setImageResource(R.mipmap.male);
+                            } else if (pSex.equals("Facebook")) {
+                                imageButton.setImageResource(R.mipmap.facebook);
+                            }
+                            return;
+                        }
+                    }
+                } else {
+                    System.out.println("Error::: in setProfilePicture()!");
+
+                }
+            }
+        });
 
 
     }
