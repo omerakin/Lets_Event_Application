@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -28,6 +29,7 @@ public class Activities_You_Activity extends AppCompatActivity {
     private List<UserActions_Class> userActions = null;
     String ObjectIdFromFile;
     List<ParseObject> obTest;
+    private TextView textViewLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +133,8 @@ public class Activities_You_Activity extends AppCompatActivity {
                     userActions);
             // Binds the Adapter to the ListView
             listviewActions.setAdapter(adapter);
+            textViewLoading = (TextView) findViewById(R.id.loading);
+            textViewLoading.setText("");
         }
 
 

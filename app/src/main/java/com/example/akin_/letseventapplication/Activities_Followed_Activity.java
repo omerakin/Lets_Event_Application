@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -22,6 +23,7 @@ public class Activities_Followed_Activity extends AppCompatActivity {
     ListViewAdapter_Requests adapter;
     private List<UserActions_Class> userActionsFollowed = null;
     List<ParseObject> obTest;
+    private TextView textViewLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +97,8 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                     userActionsFollowed);
             // Binds the Adapter to the ListView
             listviewActionsFollowed.setAdapter(adapter);
+            textViewLoading = (TextView) findViewById(R.id.loading);
+            textViewLoading.setText("");
         }
 
 
