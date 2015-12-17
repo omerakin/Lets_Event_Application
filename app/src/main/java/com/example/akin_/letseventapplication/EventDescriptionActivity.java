@@ -225,10 +225,33 @@ public class EventDescriptionActivity extends AppCompatActivity {
         testAccount.put("Comment", String.valueOf(commentBox.getText()));
         testAccount.put("CommentID", String.valueOf(listviewActions.getAdapter().getCount()));
         testAccount.saveInBackground();
+
+        ParseObject userAct = new ParseObject("UserActions");
+        userAct.put("By", ObjectIdOfUser);
+        userAct.put("To", eventObjectId);
+        userAct.put("Type", "Comment");
+        userAct.saveInBackground();
         commentBox.setText("");
         new RemoteDataTask().execute();
-
     }
+    public void attendPressed(View view){
+        String asd;
+        ParseObject testAccount = new ParseObject("Comments");
+        testAccount.put("User", NameLastname);
+        testAccount.put("Event", eventObjectId);
+        testAccount.put("isAttended", "Yes");
+        testAccount.saveInBackground();
+
+        ParseObject userAct = new ParseObject("UserActions");
+        userAct.put("By", ObjectIdOfUser);
+        userAct.put("To", eventObjectId);
+        userAct.put("Type", "Attend");
+        userAct.saveInBackground();
+        commentBox.setText("");
+        new RemoteDataTask().execute();
+    }
+
+
     private void readObjectIdFromFile() {
 
         // Read ObjectId from file
