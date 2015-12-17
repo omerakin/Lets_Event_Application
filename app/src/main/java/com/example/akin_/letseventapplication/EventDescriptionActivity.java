@@ -21,6 +21,10 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +55,9 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
     EditText commentBox;
 
+    String NameLastname;
+    String ObjectIdOfUser;
+
     List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
 
     @Override
@@ -72,7 +79,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         eventCreator =intent.getStringExtra("pECreator");
 
         dEventDateLabel.setText(intent.getStringExtra("pEDate"));
-        dEventLocationLabel.setText(intent.getStringExtra("pELocation") );
+        dEventLocationLabel.setText(intent.getStringExtra("pELocation"));
         dEventDescriptionLabel.setText(dEventDescriptionLabel.getText() +" "+ intent.getStringExtra("pEDescription") );
         //dEventCreatorLabel.setText(dEventCreatorLabel.getText() + " " + eventCreator);
         dEventTypeLabel.setText(dEventTypeLabel.getText() +" "+ intent.getStringExtra("pEType") );
@@ -83,6 +90,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         int dEpic =  Integer.parseInt(mDrawableName);
         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), dEpic);
         dEventPicture.setImageDrawable(drawable);
+        readObjectIdFromFile();
 
         //runQuery();
         new RemoteDataTask().execute();
@@ -121,6 +129,10 @@ public class EventDescriptionActivity extends AppCompatActivity {
                 ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>("TestAccount");
                 temp = query2.get(eventCreator);
                 eventCreator = temp.get("Name") + " "+ temp.get("Lastname");
+
+                ParseQuery<ParseObject> query3 = new ParseQuery<ParseObject>("TestAccount");
+                temp = query2.get(ObjectIdOfUser);
+                NameLastname = temp.get("Name") + " "+ temp.get("Lastname");
 
 
             } catch (ParseException e) {
@@ -184,7 +196,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         HashMap<String, String> hm = new HashMap<String,String>();
         hm.put("commentUserName", pname);
         hm.put("commentCreated"," Created At : " + pdate);
-        hm.put("commentText", pnumber + "  :  "+ pcomment);
+        hm.put("commentText", pnumber + "  :  " + pcomment);
         aList.add(hm);
         // Keys used in Hashmap
         String[] from = {"commentUserName", "commentCreated", "commentText", ""};
@@ -204,9 +216,11 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
         info3.setText(info3.getText() + pname + "--" + pdate + "--" + pcomment + "--");
     }
+
     public void commentPressed(View view){
+        String asd;
         ParseObject testAccount = new ParseObject("Comments");
-        testAccount.put("User", "deneme");
+        testAccount.put("User", NameLastname);
         testAccount.put("Event", eventObjectId);
         testAccount.put("Comment", String.valueOf(commentBox.getText()));
         testAccount.put("CommentID", String.valueOf(listviewActions.getAdapter().getCount()));
@@ -214,6 +228,30 @@ public class EventDescriptionActivity extends AppCompatActivity {
         commentBox.setText("");
         new RemoteDataTask().execute();
 
+    }
+    private void readObjectIdFromFile() {
+
+        // Read ObjectId from file
+        FileInputStream fisObjectId = null;
+        try {
+            fisObjectId = openFileInput("ObjectidInfromation.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedInputStream bisObjectId = new BufferedInputStream(fisObjectId);
+        StringBuffer ObjectId = new StringBuffer();
+        try {
+            while (bisObjectId.available() != 0){
+                char next = (char) bisObjectId.read();
+                ObjectId.append(next);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ObjectIdOfUser = ObjectId.toString();
+
+        System.out.println("ObjectidInformation........." + ObjectId + "............");
     }
 
 }
