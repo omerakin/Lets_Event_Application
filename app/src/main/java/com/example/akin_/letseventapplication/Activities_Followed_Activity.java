@@ -51,8 +51,7 @@ public class Activities_Followed_Activity extends AppCompatActivity {
             userActionsFollowed = new ArrayList<UserActions_Class>();
             try {
                 // Locate the class table named "Country" in Parse.com
-                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
-                        "UserActions");
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("UserActions");
                 // Locate the column named "CommentID" in Parse.com and order list
                 // by ascending
                 // query.orderByAscending("CommentID");

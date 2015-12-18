@@ -31,9 +31,12 @@ public class ListViewAdapter_Requests extends BaseAdapter{
     }
 
     public class ViewHolder {
+        /*
         TextView requestType;
         TextView requestBy;
         TextView requestTo;
+        */
+        TextView textViewRequest;
     }
 
     @Override
@@ -55,19 +58,39 @@ public class ListViewAdapter_Requests extends BaseAdapter{
         final ViewHolder holder;
         if(view == null) {
             holder = new ViewHolder();
-            view = inflater.inflate(R.layout.listview_actionsitem, null);
+            view = inflater.inflate(R.layout.listview_actionsitem2, null);
+            /*
             // Locate the TextViews in listview_item.xml
             holder.requestType = (TextView) view.findViewById(R.id.requestType);
             holder.requestBy = (TextView) view.findViewById(R.id.requestBy);
             holder.requestTo = (TextView) view.findViewById(R.id.requestTo);
+            */
+
+            holder.textViewRequest = (TextView) view.findViewById(R.id.textViewRequest);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
+        /*
         //set results to into TextViews
         holder.requestType.setText(useractionsList.get(position).getTypeOfAction());
         holder.requestBy.setText(useractionsList.get(position).getActionBy());
         holder.requestTo.setText(useractionsList.get(position).getActionTo());
+        */
+
+        if (useractionsList.get(position).getTypeOfAction().equals("Attend")){
+            holder.textViewRequest.setText(useractionsList.get(position).getActionBy() + " is attended to "
+                    +useractionsList.get(position).getActionTo() + " event.");
+
+        } else if (useractionsList.get(position).getTypeOfAction().equals("Comment")) {
+            holder.textViewRequest.setText(useractionsList.get(position).getActionBy() + " commented about "
+                    +useractionsList.get(position).getActionTo() + " event.");
+
+        } else if (useractionsList.get(position).getTypeOfAction().equals("FriendRequest")) {
+            holder.textViewRequest.setText(useractionsList.get(position).getActionBy() + " sent frend request to "
+                    +useractionsList.get(position).getActionTo() + ".");
+
+        }
 
         // Listen for ListView Item Click
        /* view.setOnClickListener(new View.OnClickListener() {
