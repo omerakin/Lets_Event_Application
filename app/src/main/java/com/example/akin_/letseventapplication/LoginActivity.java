@@ -27,6 +27,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -156,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
         // Enable Local Datastore.
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "3I5oISFpVA1okn80tFZpSH4p2bVIa0NQFwoD8cdu", "PkHNBNLH6JLX50ZN0cI7xDps8OdVhXWwm7o7ZwC8");
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         etUsername = (EditText) findViewById(R.id.usernameET);
         etPassword = (EditText) findViewById(R.id.passwordET);
