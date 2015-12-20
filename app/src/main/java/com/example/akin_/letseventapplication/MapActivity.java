@@ -198,18 +198,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             }
                             //Add to map depends on what kind of event it is.
                             mMap.addMarker(new MarkerOptions().position(EventLatLng).title(pEvent_Name)).setIcon(pPicture);
-
-
                         }
-
                     }
                 } else {
                     System.out.println("Error::: in getNearbyEvents()!");
-
                 }
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
     }
 
 }

@@ -15,6 +15,9 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -51,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         String confirmpasswordET = String.valueOf(confirmpassword.getText());
         String nameET = String.valueOf(name.getText());
         String lastnameET = String.valueOf(lastname.getText());
-        String CategoryName = spinnersex.getSelectedItem().toString();
+        String SpinnerSex = spinnersex.getSelectedItem().toString();
 
         //check the validatiy of fields
         if (emailET.trim().length()==0){
@@ -66,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please enter valid last name!").setNeutralButton("Close", null).show();
         } else if (!passwordET.equals(confirmpasswordET)) {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Password and confirm password are not matched!").setNeutralButton("Close", null).show();
-        } else if (CategoryName.equals(spinnersex.getItemAtPosition(0))) {
+        } else if (SpinnerSex.equals(spinnersex.getItemAtPosition(0))) {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Please select a gender!").setNeutralButton("Close", null).show();
         } else {
             //if every field is okey, then
@@ -76,12 +79,100 @@ public class SignUpActivity extends AppCompatActivity {
             testAccount.put("Password", passwordET);
             testAccount.put("Name", nameET);
             testAccount.put("Lastname", lastnameET);
-            testAccount.put("Sex", spinnersex);
+            testAccount.put("Sex", SpinnerSex);
             testAccount.saveInBackground();
+
+            writeToFileUserInformation(emailET, passwordET);
 
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }
 
     }
+
+    private void writeToFileUserInformation(final String usernameInformation, final String passwordInformation) {
+
+        //Write to file for saving username data
+        FileOutputStream fosUsername = null;
+        try {
+            fosUsername = openFileOutput("UsernameInfromation.txt", MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println("usernameInformation........." + usernameInformation + "............");
+            fosUsername.write(usernameInformation.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fosUsername.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Write to file for saving password data
+        FileOutputStream fosPassword = null;
+        try {
+            fosPassword = openFileOutput("PasswordInfromation.txt", MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println("passwordInformation........." + passwordInformation + "............");
+            fosPassword.write(passwordInformation.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            fosPassword.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Write to file for saving objectid
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseAccounts, ParseException e) {
+                if (e == null) {
+                    int len = parseAccounts.size();
+                    for (int i = 0; i < len; i++) {
+                        //get the i th element of Accounts in order to obtain details
+                        ParseObject p = parseAccounts.get(i);
+
+                        //get the detail information of userAccount
+                        String pEmail = p.getString("Email");
+                        String pPassword = p.getString("Password");
+                        String pObjectId;
+
+                        if(pEmail.equals(usernameInformation) && pPassword.equals(passwordInformation)){
+                            pObjectId = p.getObjectId();
+                            System.out.println("pObjectId........." + pObjectId + "............" + pObjectId);
+                            FileOutputStream fosObjectid = null;
+                            try {
+                                fosObjectid = openFileOutput("ObjectidInfromation.txt", MODE_PRIVATE);
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            }
+                            try {
+                                System.out.println("ObjectidInformation........." + pObjectId + "............");
+                                fosObjectid.write(pObjectId.getBytes());
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                            try {
+                                fosObjectid.close();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                            return;
+                        }
+                    }
+                } else {
+                    System.out.println("Error::: in writeToFileUserInformation()-->Parse!");
+                }
+            }
+        });
+    }
+
 }
