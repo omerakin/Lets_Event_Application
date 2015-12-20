@@ -20,10 +20,6 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.twotoasters.clusterkraf.Clusterkraf;
-import com.twotoasters.clusterkraf.InputPoint;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -202,6 +198,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                             }
                             //Add to map depends on what kind of event it is.
                             mMap.addMarker(new MarkerOptions().position(EventLatLng).title(pEvent_Name)).setIcon(pPicture);
+
+
                         }
 
                     }
@@ -214,7 +212,4 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     }
 
-    @Override
-    public void onBackPressed() {
-    }
 }

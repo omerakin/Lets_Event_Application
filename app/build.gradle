@@ -33,5 +33,4 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile 'com.parse:parse-android:1.+'
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
-    compile 'com.twotoasters.clusterkraf:library:1.0.+'
 }
