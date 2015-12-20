@@ -213,7 +213,7 @@
             android:textSize="20sp"
             android:background="#80000000"
             android:onClick="onAddEvent"
-            android:layout_marginTop="25sp"/>
+            android:layout_marginTop="15sp"/>
     </LinearLayout>
 
 </RelativeLayout>
