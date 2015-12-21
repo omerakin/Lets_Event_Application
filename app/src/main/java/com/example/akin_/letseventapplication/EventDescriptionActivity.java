@@ -1,5 +1,6 @@
 package com.example.akin_.letseventapplication;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -82,19 +83,89 @@ public class EventDescriptionActivity extends AppCompatActivity {
         dEventLocationLabel.setText(intent.getStringExtra("pELocation"));
         dEventDescriptionLabel.setText(dEventDescriptionLabel.getText() +" "+ intent.getStringExtra("pEDescription") );
         //dEventCreatorLabel.setText(dEventCreatorLabel.getText() + " " + eventCreator);
-        dEventTypeLabel.setText(dEventTypeLabel.getText() +" "+ intent.getStringExtra("pEType") );
+        dEventTypeLabel.setText(intent.getStringExtra("pEType"));
         tww.setText(tww.getText() +" "+ intent.getStringExtra("pEName") );
 
         dEventPicture = (ImageView)findViewById(R.id.imageView);
-        String mDrawableName = intent.getStringExtra("pEPicture");
-        int dEpic =  Integer.parseInt(mDrawableName);
-        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), dEpic);
-        dEventPicture.setImageDrawable(drawable);
+        //String mDrawableName = intent.getStringExtra("pEPicture");
+        //int dEpic =  Integer.parseInt(mDrawableName);
+        //Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), dEpic);
+        //dEventPicture.setImageDrawable(drawable);
+        setPictureOfEvent();
         readObjectIdFromFile();
 
         //runQuery();
         new RemoteDataTask().execute();
 
+    }
+
+    private void setPictureOfEvent() {
+        // set the picture of event
+        if (dEventTypeLabel.getText().equals("Birthday")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.birthday_description));
+        } else if (dEventTypeLabel.getText().equals("Concerts")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.concerts_description));
+        } else if (dEventTypeLabel.getText().equals("Conferences")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.conference_description));
+        } else if (dEventTypeLabel.getText().equals("Comedy Events")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.comedyevents_description));
+        } else if (dEventTypeLabel.getText().equals("Education")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.education_description));
+        } else if (dEventTypeLabel.getText().equals("Family")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.family_description));
+        } else if (dEventTypeLabel.getText().equals("Festivals")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.festivals_description));
+        } else if (dEventTypeLabel.getText().equals("Film")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.film_description));
+        } else if (dEventTypeLabel.getText().equals("Food - Wine")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.food_wine_description));
+        } else if (dEventTypeLabel.getText().equals("Fundraising - Charity")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.fundraising_description));
+        } else if (dEventTypeLabel.getText().equals("Art Galleries - Exhibits")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.exhibits_description));
+        } else if (dEventTypeLabel.getText().equals("Health - Wellness")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.health_description));
+        } else if (dEventTypeLabel.getText().equals("Holiday Events")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.holiday_description));
+        } else if (dEventTypeLabel.getText().equals("Kids")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.kids_description));
+        } else if (dEventTypeLabel.getText().equals("Literary - Books")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.literary_description));
+        } else if (dEventTypeLabel.getText().equals("Museums - Attractions")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.museums_description));
+        } else if (dEventTypeLabel.getText().equals("Business - Networking")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.bussiness_description));
+        } else if (dEventTypeLabel.getText().equals("Nightlife - Singles")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.nightlife_description));
+        } else if (dEventTypeLabel.getText().equals("University - Alumni")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.university_description));
+        } else if (dEventTypeLabel.getText().equals("Organizations - Meetups")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.organizations_description));
+        } else if (dEventTypeLabel.getText().equals("Outdoors - Recreation")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.outdoors_description));
+        } else if (dEventTypeLabel.getText().equals("Performing Arts")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.performing_description));
+        } else if (dEventTypeLabel.getText().equals("Pets")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.pets_description));
+        } else if (dEventTypeLabel.getText().equals("Politics - Activism")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.politics_description));
+        } else if (dEventTypeLabel.getText().equals("Sales - Retail")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.retail_description));
+        } else if (dEventTypeLabel.getText().equals("Science")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.science_description));
+        } else if (dEventTypeLabel.getText().equals("Religion - Spirituality")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.religion_description));
+        } else if (dEventTypeLabel.getText().equals("Sports")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.sports_description));
+        } else if (dEventTypeLabel.getText().equals("Technology")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.teknoloji_description));
+        } else if (dEventTypeLabel.getText().equals("Tour Dates")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.tours_description));
+        } else if (dEventTypeLabel.getText().equals("Tradeshows")) {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.tradeshow_description));
+        } else {
+            dEventPicture.setImageDrawable(getResources().getDrawable(R.drawable.other_description));
+        }
     }
 
     // create remotedatatask asynck task
@@ -233,19 +304,14 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
     public void attendPressed(View view){
 
-        ParseObject testAccount = new ParseObject("Comments");
-        testAccount.put("User", NameLastname);
-        testAccount.put("Event", eventObjectId);
-        testAccount.put("isAttended", "Yes");
-        testAccount.saveInBackground();
-
         ParseObject userAct = new ParseObject("UserActions");
         userAct.put("By", ObjectIdOfUser);
         userAct.put("To", eventObjectId);
         userAct.put("Type", "Attend");
         userAct.saveInBackground();
-        commentBox.setText("");
-        new RemoteDataTask().execute();
+
+        // Show added message to user
+        new AlertDialog.Builder(this).setTitle("Congratulations").setMessage("You are successfully scheduled to this event!").setNeutralButton("Continue", null).show();
     }
 
     private void readObjectIdFromFile() {
