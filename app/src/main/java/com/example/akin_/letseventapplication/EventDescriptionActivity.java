@@ -79,8 +79,8 @@ public class EventDescriptionActivity extends AppCompatActivity {
         dEventTypeLabel = (TextView)findViewById(R.id.dEventTypeLabel);
         eventCreator =intent.getStringExtra("pECreator");
 
-        dEventDateLabel.setText(intent.getStringExtra("pEDate"));
-        dEventLocationLabel.setText(intent.getStringExtra("pELocation"));
+        dEventDateLabel.setText(intent.getStringExtra("pEDate").substring(6));
+        dEventLocationLabel.setText(intent.getStringExtra("pELocation").substring(10));
         dEventDescriptionLabel.setText(dEventDescriptionLabel.getText() +" "+ intent.getStringExtra("pEDescription") );
         //dEventCreatorLabel.setText(dEventCreatorLabel.getText() + " " + eventCreator);
         dEventTypeLabel.setText(intent.getStringExtra("pEType"));
@@ -214,7 +214,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void result) {
-            dEventCreatorLabel.setText("Creator: " + " " + eventCreator);
+            dEventCreatorLabel.setText(eventCreator);
             // Locate the listview in listview .xml
             listviewActions = (ListView) findViewById(R.id.listView2);
             // Pass the results into ListViewAdapter.java

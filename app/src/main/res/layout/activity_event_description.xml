@@ -31,6 +31,7 @@
                     android:layout_width="100sp"
                     android:layout_height="50sp"
                     android:text="Attend"
+                    android:background="#E8EAF6"
                     android:onClick="attendPressed"/>
             </LinearLayout>
 
@@ -51,94 +52,160 @@
                         android:id="@+id/dEventNameLabel" />
                 </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/dEventDateLabel"
-                android:layout_below="@+id/imageView" />
+                android:layout_marginTop="215sp"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="25sp"
-                android:id="@+id/dEventLocationLabel"
-                android:layout_below="@+id/dEventDateLabel"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/dEventDescriptionLabel"
-                android:layout_below="@+id/dEventLocationLabel"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:id="@+id/line"
-                android:layout_below="@+id/dEventDescriptionLabel"
-                android:background="@android:color/darker_gray"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textSize="15sp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/dEventCreatorLabel"
-                android:layout_below="@+id/line" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="15sp"
-                android:id="@+id/dEventTypeLabel"
-                android:layout_below="@+id/dEventCreatorLabel"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:id="@+id/linenext"
-                android:layout_below="@+id/dEventTypeLabel"
-                android:background="@android:color/darker_gray"/>
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Comment"
-                android:id="@+id/buttonComment"
-                android:onClick="commentPressed"
-                android:layout_below="@+id/linenext"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50sp"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/commentBox"
-                android:hint="Comment here"
-                android:layout_below="@+id/linenext"
-                android:layout_toLeftOf="@+id/buttonComment"
-                android:layout_toStartOf="@+id/buttonComment"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Comments :"
-                    android:id="@+id/info3"
-                    android:layout_below="@+id/commentBox"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="85sp"
+                        android:layout_height="25sp"
+                        android:src="@mipmap/ic_date_dsc"/>
+                    <TextView
+                        android:layout_width="300sp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/dEventDateLabel"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/line1"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="85sp"
+                        android:layout_height="40sp"
+                        android:src="@mipmap/ic_map_dsc"/>
+                    <TextView
+                        android:layout_width="300sp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="15sp"
+                        android:id="@+id/dEventLocationLabel"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/line2"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="85sp"
+                        android:layout_height="25sp"
+                        android:src="@mipmap/ic_desc_dsc"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:id="@+id/dEventDescriptionLabel" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/line3"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="85sp"
+                        android:layout_height="25sp"
+                        android:src="@mipmap/ic_creator_dsc"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:id="@+id/dEventCreatorLabel" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/line4"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10sp"
+                    android:layout_marginBottom="10sp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="85sp"
+                        android:layout_height="25sp"
+                        android:src="@mipmap/ic_type_dsc"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp"
+                        android:id="@+id/dEventTypeLabel"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:id="@+id/line5"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:layout_width="275sp"
+                        android:layout_height="50sp"
+                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/commentBox"
+                        android:hint="Comment here"/>
+                    <Button
+                        android:layout_width="100sp"
+                        android:layout_height="50sp"
+                        android:text="Comment"
+                        android:id="@+id/buttonComment" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Comments :"
+                        android:id="@+id/info3" />
+                </LinearLayout>
+
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 
