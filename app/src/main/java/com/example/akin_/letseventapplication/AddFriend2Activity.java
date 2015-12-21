@@ -84,7 +84,6 @@ public class AddFriend2Activity extends AppCompatActivity {
         if (objID.equals(friendId)) {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("You cant add yourself!").setNeutralButton("Close", null).show();
 
-
         }else if (objID != ""){
             ParseObject friendRequest = new ParseObject("FriendRequest");
             friendRequest.put("Sender", objID);
