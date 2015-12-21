@@ -4,6 +4,7 @@ import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
     private String UsernameString;
     private String PasswordString;
     private ImageButton imageButton;
+    private String ObjectIdOfUser;
+    private TextView EventsNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         imageButton = (ImageButton) findViewById(R.id.profilePictureButton);
-
+        EventsNumber = (TextView) findViewById(R.id.EventsNumber);
 
         TabHost tabHost3 = (TabHost) findViewById(R.id.tabHost3);
         LocalActivityManager mLocalActivityManager = new LocalActivityManager(this, false);
@@ -66,9 +69,12 @@ public class ProfileActivity extends AppCompatActivity {
         setProfilePicture();
         setNameAndLastnameOfUser();
         getNameandLastnameFromParse();
+        getEventNumber();
 
 
     }
+
+
 
     private void setProfilePicture() {
 
@@ -165,9 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println("ObjectidInformation........." + ObjectId + "............");
-
+        ObjectIdOfUser = ObjectId.toString();
     }
 
     private void getNameandLastnameFromParse() {
@@ -208,6 +212,30 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getEventNumber() {
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestEvent");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseEvents, ParseException e) {
+                if (e == null) {
+                    int len = parseEvents.size();
+                    int eventsNumber = 0;
+                    for (int i = 0; i < len; i++) {
+                        //get the i th element of events in order to obtain details
+                        ParseObject p = parseEvents.get(i);
+                        String pEvent_Creater = p.getString("Event_Creater");
+
+                        //if Event creater is same as this user, show events. If not, do not show
+                        if (pEvent_Creater.equals(ObjectIdOfUser)){
+                            eventsNumber++;
+                        }
+                    }
+                    EventsNumber.setText(Integer.toString(eventsNumber));
+                }
+            }
+        });
     }
 
     @Override

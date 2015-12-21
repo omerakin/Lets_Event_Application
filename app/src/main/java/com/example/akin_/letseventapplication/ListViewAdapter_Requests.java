@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,14 +21,18 @@ public class ListViewAdapter_Requests extends BaseAdapter{
     LayoutInflater inflater;
     private List<UserActions_Class> useractionsList = null;
     private ArrayList<UserActions_Class> arraylist;
+    private ArrayList<String> sidePictures;
 
     public ListViewAdapter_Requests(Context context,
-                           List<UserActions_Class> useractionsList) {
+                                    List<UserActions_Class> useractionsList,
+                                    ArrayList<String> arrayListPicture) {
         mContext = context;
         this.useractionsList = useractionsList;
         inflater = LayoutInflater.from(mContext);
         this.arraylist = new ArrayList<UserActions_Class>();
         this.arraylist.addAll(useractionsList);
+        sidePictures = new ArrayList<String>();
+        sidePictures.addAll(arrayListPicture);
     }
 
     public class ViewHolder {
@@ -37,6 +42,7 @@ public class ListViewAdapter_Requests extends BaseAdapter{
         TextView requestTo;
         */
         TextView textViewRequest;
+        ImageView imageViewSidePicture;
     }
 
     @Override
@@ -67,6 +73,7 @@ public class ListViewAdapter_Requests extends BaseAdapter{
             */
 
             holder.textViewRequest = (TextView) view.findViewById(R.id.textViewRequest);
+            holder.imageViewSidePicture = (ImageView) view.findViewById(R.id.imageViewSidePicture);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -77,6 +84,14 @@ public class ListViewAdapter_Requests extends BaseAdapter{
         holder.requestBy.setText(useractionsList.get(position).getActionBy());
         holder.requestTo.setText(useractionsList.get(position).getActionTo());
         */
+
+        if (sidePictures.get(position).toString().equals("Male")){
+            holder.imageViewSidePicture.setImageResource(R.drawable.male);
+        } else if (sidePictures.get(position).toString().equals("Female")) {
+            holder.imageViewSidePicture.setImageResource(R.drawable.female);
+        } else if (sidePictures.get(position).toString().equals("Facebook")) {
+            holder.imageViewSidePicture.setImageResource(R.drawable.facebook);
+        }
 
         if (useractionsList.get(position).getTypeOfAction().equals("Attend")){
             holder.textViewRequest.setText(useractionsList.get(position).getActionBy() + " is attended to "

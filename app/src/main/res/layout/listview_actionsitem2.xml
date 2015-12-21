@@ -2,13 +2,26 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-
-
-    <TextView
-        android:id="@+id/textViewRequest"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
-        android:layout_marginBottom="10sp"/>
+        android:layout_marginBottom="10sp">
 
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_marginLeft="10sp"
+            android:id="@+id/imageViewSidePicture" />
+
+        <TextView
+            android:id="@+id/textViewRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:text="aaa"
+            android:layout_marginTop="10sp"
+            android:layout_marginBottom="10sp" />
+
+    </LinearLayout>
 </RelativeLayout>

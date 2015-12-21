@@ -8,7 +8,6 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -30,6 +29,7 @@ public class Activities_You_Activity extends AppCompatActivity {
     String ObjectIdFromFile;
     List<ParseObject> obTest;
     private TextView textViewLoading;
+    ArrayList<String> arrayListPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +80,7 @@ public class Activities_You_Activity extends AppCompatActivity {
         protected Void doInBackground(Void... params){
             //create arraylist
             userActions = new ArrayList<UserActions_Class>();
+            arrayListPicture = new ArrayList<String>();
             try {
                 // Locate the class table named "Country" in Parse.com
                 ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("UserActions");
@@ -95,12 +96,12 @@ public class Activities_You_Activity extends AppCompatActivity {
                         myAction.setActionBy((String) pAction.get("By"));
                         myAction.setActionTo((String) pAction.get("To"));
 
-
                         //Pasre object ids transformed to names
 
                         ParseObject temp;
                         ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>("TestAccount");
                         temp = query2.get(myAction.getActionBy());
+                        arrayListPicture.add((String) temp.get("Sex"));
                         myAction.setActionBy( temp.get("Name") + " "+ temp.get("Lastname"));
 
                         if(myAction.getTypeOfAction().equals("FriendRequest")) {
@@ -114,7 +115,6 @@ public class Activities_You_Activity extends AppCompatActivity {
 
                         }
                         //add to list
-
                         userActions.add(myAction);
                     }
                 }
@@ -130,7 +130,7 @@ public class Activities_You_Activity extends AppCompatActivity {
             listviewActions = (ListView) findViewById(R.id.listviewActions);
             // Pass the results into ListViewAdapter.java
             adapter = new ListViewAdapter_Requests(Activities_You_Activity.this,
-                    userActions);
+                    userActions, arrayListPicture);
             // Binds the Adapter to the ListView
             listviewActions.setAdapter(adapter);
             textViewLoading = (TextView) findViewById(R.id.loading);

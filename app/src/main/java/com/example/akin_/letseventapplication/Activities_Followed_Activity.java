@@ -21,8 +21,10 @@ public class Activities_Followed_Activity extends AppCompatActivity {
     List<ParseObject> ob;
     ProgressDialog mProgressDialog;
     ListViewAdapter_Requests adapter;
-    private List<UserActions_Class> userActionsFollowed = null;
     List<ParseObject> obTest;
+    ArrayList<String> arrayListPicture;
+
+    private List<UserActions_Class> userActionsFollowed = null;
     private TextView textViewLoading;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class Activities_Followed_Activity extends AppCompatActivity {
         protected Void doInBackground(Void... params){
             //create arraylist
             userActionsFollowed = new ArrayList<UserActions_Class>();
+            arrayListPicture = new ArrayList<String>();
             try {
                 // Locate the class table named "Country" in Parse.com
                 ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("UserActions");
@@ -66,6 +69,8 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                     ParseObject temp;
                     ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>("TestAccount");
                     temp = query2.get(myAction.getActionBy());
+                    String deneme = (String) temp.get("Sex");
+                    arrayListPicture.add((String) temp.get("Sex"));
                     myAction.setActionBy( temp.get("Name") + " "+ temp.get("Lastname"));
 
                     if(myAction.getTypeOfAction().equals("FriendRequest")) {
@@ -80,6 +85,7 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                     }
                     //add to list
                     userActionsFollowed.add(myAction);
+
                 }
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
@@ -93,7 +99,7 @@ public class Activities_Followed_Activity extends AppCompatActivity {
             listviewActionsFollowed = (ListView) findViewById(R.id.listviewActionsFollowed);
             // Pass the results into ListViewAdapter.java
             adapter = new ListViewAdapter_Requests(Activities_Followed_Activity.this,
-                    userActionsFollowed);
+                    userActionsFollowed, arrayListPicture);
             // Binds the Adapter to the ListView
             listviewActionsFollowed.setAdapter(adapter);
             textViewLoading = (TextView) findViewById(R.id.loading);
