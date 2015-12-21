@@ -23,6 +23,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -39,6 +40,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
     TextView tww;
     TextView info3;
     Button buttonComment;
+    Button buttonAttend;
     int arrayLength = 0;
     String eventID;
     String[] commentUser ;
@@ -63,6 +65,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
     String NameLastname;
     String ObjectIdOfUser;
+    String isAttended = "-1";
 
     List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
 
@@ -75,6 +78,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         tww = (TextView)findViewById(R.id.dEventNameLabel);
         info3 =(TextView)findViewById(R.id.info3);
         buttonComment = (Button)findViewById(R.id.buttonComment);
+        buttonAttend = (Button) findViewById(R.id.buttonAttend);
         eventObjectId = intent.getStringExtra("parseObjectId");
         commentBox = (EditText)findViewById(R.id.commentBox);
 
@@ -211,6 +215,14 @@ public class EventDescriptionActivity extends AppCompatActivity {
                 temp = query2.get(ObjectIdOfUser);
                 NameLastname = temp.get("Name") + " "+ temp.get("Lastname");
 
+                ParseQuery<ParseObject> UserEventAttend = new ParseQuery<ParseObject>("Attends");
+                UserEventAttend.whereEqualTo("User",ObjectIdOfUser);
+                UserEventAttend.whereEqualTo("Event", eventObjectId);
+                if (UserEventAttend.count() > 0) {
+                    isAttended = "1";
+                } else {
+                    isAttended = "0";
+                }
 
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
@@ -220,6 +232,9 @@ public class EventDescriptionActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void result) {
+            if (isAttended.equals("1")) {
+                buttonAttend.setBackgroundResource(R.drawable.yes_attend);
+            }
             dEventCreatorLabel.setText(eventCreator);
             // Locate the listview in listview .xml
             listviewActions = (ListView) findViewById(R.id.listView2);
@@ -311,14 +326,30 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
     public void attendPressed(View view){
 
-        ParseObject userAct = new ParseObject("UserActions");
-        userAct.put("By", ObjectIdOfUser);
-        userAct.put("To", eventObjectId);
-        userAct.put("Type", "Attend");
-        userAct.saveInBackground();
+        if (isAttended.equals("0")) {
+            ParseObject userAct = new ParseObject("UserActions");
+            userAct.put("By", ObjectIdOfUser);
+            userAct.put("To", eventObjectId);
+            userAct.put("Type", "Attend");
+            userAct.saveInBackground();
 
-        // Show added message to user
-        new AlertDialog.Builder(this).setTitle("Congratulations").setMessage("You are successfully scheduled to this event!").setNeutralButton("Continue", null).show();
+            ParseObject attends = new ParseObject("Attends");
+            attends.put("User", ObjectIdOfUser);
+            attends.put("Event", eventObjectId);
+            attends.put("isAttended", "1");
+            attends.saveInBackground();
+
+            isAttended = "1";
+            // Show added message to user
+            new AlertDialog.Builder(this).setTitle("Congratulations").setMessage("You are successfully scheduled to this event!").setNeutralButton("Continue", null).show();
+        } else if (isAttended.equals("-1")) {
+            //wait
+        } else {
+            // Show added message to user
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("You are already attending this event!").setNeutralButton("Continue", null).show();
+        }
+
+        new RemoteDataTask().execute();
     }
 
     private void readObjectIdFromFile() {

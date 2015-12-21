@@ -24,14 +24,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10sp"
+                android:layout_marginTop="15sp"
+                android:layout_marginRight="10sp"
                 android:orientation="vertical"
                 android:gravity="right">
                 <Button
-                    android:layout_width="100sp"
+                    android:layout_width="150sp"
                     android:layout_height="50sp"
-                    android:text="Attend"
-                    android:background="#E8EAF6"
+                    android:id="@+id/buttonAttend"
+                    android:background="@drawable/will_attend"
                     android:onClick="attendPressed"/>
             </LinearLayout>
 
@@ -195,6 +196,7 @@
                     <Button
                         android:layout_width="100sp"
                         android:layout_height="50sp"
+                        android:layout_marginRight="10sp"
                         android:text="Comment"
                         android:onClick="commentPressed"
                         android:id="@+id/buttonComment" />
