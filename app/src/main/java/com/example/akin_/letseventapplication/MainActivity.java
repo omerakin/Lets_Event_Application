@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 break;
             case R.id.search:
-                Intent intent = new Intent(this, SearchActivity.class);
+                Intent intent = new Intent(this, AddFriend2Activity.class);
                 startActivity(intent);
                 break;
         }
