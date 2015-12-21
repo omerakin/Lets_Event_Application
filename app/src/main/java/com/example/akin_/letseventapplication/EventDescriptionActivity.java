@@ -228,14 +228,6 @@ public class EventDescriptionActivity extends AppCompatActivity {
                     userComments);
             // Binds the Adapter to the ListView
             listviewActions.setAdapter(adapter);
-            listviewActions.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    return false;
-                }
-            });
-
             setListViewHeightBasedOnChildren(listviewActions);
         }
 
