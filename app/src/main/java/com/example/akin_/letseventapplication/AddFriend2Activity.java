@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
@@ -19,6 +20,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class AddFriend2Activity extends AppCompatActivity {
 
@@ -65,7 +67,7 @@ public class AddFriend2Activity extends AppCompatActivity {
             public void done(ParseObject object, ParseException e) {
                 if (object == null) {
                     Log.d("score", "The getFirst request failed.");
-                    afterQueryProcessing("ssss", "ssss");
+                    afterQueryProcessing("", "ssss");
                     // You don't have a good value to use, so figure
                     // out a way to handle that scenario
                 } else {
@@ -79,10 +81,11 @@ public class AddFriend2Activity extends AppCompatActivity {
 
     private void afterQueryProcessing(String objID, String friendId) {
 
-        if (objID == friendId) {
+        if (objID.equals(friendId)) {
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("You cant add yourself!").setNeutralButton("Close", null).show();
 
-        }else        if (objID != ""){
+
+        }else if (objID != ""){
             ParseObject friendRequest = new ParseObject("FriendRequest");
             friendRequest.put("Sender", objID);
             friendRequest.put("Receiver", friendId);
@@ -95,7 +98,15 @@ public class AddFriend2Activity extends AppCompatActivity {
             userAct.put("Type", "FriendRequest");
             userAct.saveInBackground();
             new AlertDialog.Builder(this).setTitle("Warning").setMessage("Friend Successfully added Now you can see what they are doing!").setNeutralButton("Close", null).show();
-             } else {
+            //ParsePush.subscribeInBackground(friendString);
+            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            installation.addAllUnique("channels", Arrays.asList(friendString));
+            installation.saveInBackground();
+            ParsePush push = new ParsePush();
+            push.setChannel(friendString);
+            push.setMessage("A added " + friendString);
+            push.sendInBackground();
+        } else {
               new AlertDialog.Builder(this).setTitle("Warning").setMessage("Incorrect Email!").setNeutralButton("Close", null).show();
                  }
 
@@ -106,7 +117,7 @@ public class AddFriend2Activity extends AppCompatActivity {
         friendString = String.valueOf(addFriendEditText.getText());
 
         if (friendString == null) {
-            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Incorrect Email!").setNeutralButton("Close", null).show();
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Empty Email!").setNeutralButton("Close", null).show();
 
         }else{
            runQuery(friendString);
