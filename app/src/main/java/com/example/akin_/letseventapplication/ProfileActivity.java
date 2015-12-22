@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -236,6 +237,13 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void onLogOut (View view) {
+        // Direct to log in screen
+        Intent intent = new Intent(this,LoginActivity.class);
+        startActivity(intent);
+
     }
 
     @Override

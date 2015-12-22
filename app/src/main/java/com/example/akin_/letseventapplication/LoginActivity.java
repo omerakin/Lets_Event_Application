@@ -116,7 +116,6 @@ public class LoginActivity extends AppCompatActivity {
                         }).executeAsync();
 
 
-
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
 
@@ -154,10 +153,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "3I5oISFpVA1okn80tFZpSH4p2bVIa0NQFwoD8cdu", "PkHNBNLH6JLX50ZN0cI7xDps8OdVhXWwm7o7ZwC8");
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+        try {
+            // Enable Local Datastore.
+            Parse.enableLocalDatastore(this);
+            Parse.initialize(this, "3I5oISFpVA1okn80tFZpSH4p2bVIa0NQFwoD8cdu", "PkHNBNLH6JLX50ZN0cI7xDps8OdVhXWwm7o7ZwC8");
+            ParseInstallation.getCurrentInstallation().saveInBackground();
+        } catch (Exception ex) {
+            //do nothing...
+        }
+
 
         etUsername = (EditText) findViewById(R.id.usernameET);
         etPassword = (EditText) findViewById(R.id.passwordET);
@@ -330,6 +334,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onSignup (View view) {
         Intent intent = new Intent(this,SignUpActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
 }
