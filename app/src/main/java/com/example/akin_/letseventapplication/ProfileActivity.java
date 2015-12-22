@@ -19,6 +19,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -29,14 +30,19 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private String ObjectIdOfUser;
     private TextView EventsNumber;
+    private TextView FriendNumber;
+    private ArrayList<String> ObjectIdofFriendList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        ObjectIdofFriendList = new ArrayList<>();
+
         imageButton = (ImageButton) findViewById(R.id.profilePictureButton);
         EventsNumber = (TextView) findViewById(R.id.EventsNumber);
+        FriendNumber = (TextView) findViewById(R.id.FriendNumber);
 
         TabHost tabHost3 = (TabHost) findViewById(R.id.tabHost3);
         LocalActivityManager mLocalActivityManager = new LocalActivityManager(this, false);
@@ -71,11 +77,10 @@ public class ProfileActivity extends AppCompatActivity {
         setNameAndLastnameOfUser();
         getNameandLastnameFromParse();
         getEventNumber();
+        getFriendNumber();
 
 
     }
-
-
 
     private void setProfilePicture() {
 
@@ -237,6 +242,43 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void getFriendNumber() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequest");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseFriendRequest, ParseException e) {
+                if (e == null) {
+                    int len = parseFriendRequest.size();
+                    //check for sender
+                    for (int i = 0; i < len; i++) {
+                        ParseObject p = parseFriendRequest.get(i);
+                        String pSender = p.getString("Sender");
+                        if (pSender.equals(ObjectIdOfUser)) {
+                            String pReceiver = p.getString("Receiver");
+                            if (!ObjectIdofFriendList.contains(pReceiver) && !pReceiver.equals(pSender)) {
+                                ObjectIdofFriendList.add(pReceiver);
+                            }
+                        }
+                    }
+                    //check for receiver
+                    for (int i = 0; i < len; i++) {
+                        ParseObject p = parseFriendRequest.get(i);
+                        String pReceiver = p.getString("Receiver");
+                        if (pReceiver.equals(ObjectIdOfUser)) {
+                            String pSender = p.getString("Sender");
+                            if (!ObjectIdofFriendList.contains(pSender) && !pReceiver.equals(pSender)) {
+                                ObjectIdofFriendList.add(pSender);
+                            }
+                        }
+                    }
+                    FriendNumber.setText(String.valueOf(ObjectIdofFriendList.size()));
+                } else {
+                    System.out.println("Error:......................getFriendList()");
+                }
+            }
+        });
+
     }
 
     public void onLogOut (View view) {

@@ -118,8 +118,8 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="15dp"
-                        android:text="25"
-                        android:id="@+id/FriendsNumber"
+                        android:text="0"
+                        android:id="@+id/FriendNumber"
                         android:gravity="center" />
                 </LinearLayout>
 
