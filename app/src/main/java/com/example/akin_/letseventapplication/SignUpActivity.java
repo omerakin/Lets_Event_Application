@@ -85,9 +85,9 @@ public class SignUpActivity extends AppCompatActivity {
             testAccount.put("Sex", SpinnerSex);
             testAccount.saveInBackground();
 
-            writeToFileUserInformation(emailET, passwordET);
+            //writeToFileUserInformation(emailET, passwordET);
 
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
         }
 
@@ -146,7 +146,7 @@ public class SignUpActivity extends AppCompatActivity {
                         //get the detail information of userAccount
                         String pEmail = p.getString("Email");
                         String pPassword = p.getString("Password");
-                        String pObjectId;
+                        String pObjectId = "";
 
                         if(pEmail.equals(usernameInformation) && pPassword.equals(passwordInformation)){
                             pObjectId = p.getObjectId();
