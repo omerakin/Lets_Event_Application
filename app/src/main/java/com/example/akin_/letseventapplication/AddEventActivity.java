@@ -430,4 +430,8 @@ public class AddEventActivity extends AppCompatActivity implements AdapterView.O
         }
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
 }
