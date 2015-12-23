@@ -26,6 +26,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 
 import java.io.BufferedInputStream;
@@ -66,6 +67,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
     String NameLastname;
     String ObjectIdOfUser;
     String isAttended = "-1";
+    String emailOfUser;
 
     List<HashMap<String,String>> aList = new ArrayList<HashMap<String,String>>();
 
@@ -213,6 +215,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
 
                 ParseQuery<ParseObject> query3 = new ParseQuery<ParseObject>("TestAccount");
                 temp = query2.get(ObjectIdOfUser);
+                emailOfUser = (String)temp.get("Email");
                 NameLastname = temp.get("Name") + " "+ temp.get("Lastname");
 
                 ParseQuery<ParseObject> UserEventAttend = new ParseQuery<ParseObject>("Attends");
@@ -321,6 +324,22 @@ public class EventDescriptionActivity extends AppCompatActivity {
         userAct.put("Type", "Comment");
         userAct.saveInBackground();
         commentBox.setText("");
+
+
+        String tempStr = emailOfUser;
+        String channelPush;
+        int checkMinus = tempStr.indexOf("@");
+        if (checkMinus != -1) {
+            channelPush = tempStr.substring(0, checkMinus);
+        }else{
+            channelPush = emailOfUser;
+        }
+        ParsePush push = new ParsePush();
+        push.setChannel(channelPush);
+        push.setMessage(channelPush + " commented on " + tww.getText());
+        push.sendInBackground();
+
+
         new RemoteDataTask().execute();
     }
 
@@ -342,6 +361,21 @@ public class EventDescriptionActivity extends AppCompatActivity {
             isAttended = "1";
             // Show added message to user
             new AlertDialog.Builder(this).setTitle("Congratulations").setMessage("You are successfully scheduled to this event!").setNeutralButton("Continue", null).show();
+
+            String tempStr = emailOfUser;
+            String channelPush;
+            int checkMinus = tempStr.indexOf("@");
+            if (checkMinus != -1) {
+                channelPush = tempStr.substring(0, checkMinus);
+            }else{
+                channelPush = emailOfUser;
+            }
+            ParsePush push = new ParsePush();
+            push.setChannel(channelPush);
+            push.setMessage(channelPush + " attended to " + tww.getText());
+            push.sendInBackground();
+
+
         } else if (isAttended.equals("-1")) {
             //wait
         } else {
