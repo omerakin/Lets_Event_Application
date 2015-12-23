@@ -71,8 +71,10 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                 ob = query.find();
                 for (ParseObject pAction : ob) {
                     for (int j=0; j<ObjectIdofFriendList.size();j++) {
-                        if (ObjectIdofFriendList.get(j).equals(pAction.get("By")==true
-                                ||  ObjectIdofFriendList.get(j).equals(pAction.get("To"))==true)) {
+                        if ((ObjectIdofFriendList.get(j).equals(pAction.get("By")==true
+                                || ObjectIdofFriendList.get(j).equals(pAction.get("To"))==true))
+                                && ((!pAction.get("By").equals(ObjectIdOfUser))
+                                || (!pAction.get("To").equals(ObjectIdOfUser)))) {
                             UserActions_Class myAction = new UserActions_Class();
                             myAction.setTypeOfAction((String) pAction.get("Type"));
                             myAction.setActionBy((String) pAction.get("By"));
@@ -157,7 +159,9 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                         String pSender = p.getString("Sender");
                         if (pSender.equals(ObjectIdOfUser)) {
                             String pReceiver = p.getString("Receiver");
-                            if (!ObjectIdofFriendList.contains(pReceiver) && !pReceiver.equals(pSender)) {
+                            if (!ObjectIdofFriendList.contains(pReceiver)
+                                    && !pSender.equals(pReceiver)
+                                    && !pReceiver.equals(ObjectIdOfUser)) {
                                 ObjectIdofFriendList.add(pReceiver);
                             }
                         }
@@ -168,7 +172,9 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                         String pReceiver = p.getString("Receiver");
                         if (pReceiver.equals(ObjectIdOfUser)) {
                             String pSender = p.getString("Sender");
-                            if (!ObjectIdofFriendList.contains(pSender) && !pReceiver.equals(pSender)) {
+                            if (!ObjectIdofFriendList.contains(pSender)
+                                    && !pReceiver.equals(pSender)
+                                    && !pSender.equals(ObjectIdOfUser)) {
                                 ObjectIdofFriendList.add(pSender);
                             }
                         }
