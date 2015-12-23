@@ -21,11 +21,11 @@ public class EventsActivity extends AppCompatActivity {
 
         TabHost.TabSpec event_Public_Activity = tabHost2.newTabSpec("Public");
         event_Public_Activity.setIndicator("PUBLIC");
-        event_Public_Activity.setContent(new Intent(this, Event_Public_Activity.class));
+        event_Public_Activity.setContent(new Intent(this, Event_Public_Activity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         TabHost.TabSpec event_Friends_Activity = tabHost2.newTabSpec("Friends");
         event_Friends_Activity.setIndicator("FRIENDS");
-        event_Friends_Activity.setContent(new Intent(this, Event_Friends_Activity.class));
+        event_Friends_Activity.setContent(new Intent(this, Event_Friends_Activity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
         TabHost.TabSpec event_Private_Activity = tabHost2.newTabSpec("Private");
         event_Private_Activity.setIndicator("PRIVATE");
