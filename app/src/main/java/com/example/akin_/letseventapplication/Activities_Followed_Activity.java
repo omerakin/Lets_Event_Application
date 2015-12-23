@@ -71,10 +71,10 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                 ob = query.find();
                 for (ParseObject pAction : ob) {
                     for (int j=0; j<ObjectIdofFriendList.size();j++) {
-                        if ((ObjectIdofFriendList.get(j).equals(pAction.get("By")==true
-                                || ObjectIdofFriendList.get(j).equals(pAction.get("To"))==true))
+                        if (((ObjectIdofFriendList.get(j).equals(pAction.get("By"))) == true
+                                    || ((ObjectIdofFriendList.get(j).equals(pAction.get("To")))==true))
                                 && ((!pAction.get("By").equals(ObjectIdOfUser))
-                                || (!pAction.get("To").equals(ObjectIdOfUser)))) {
+                                    || (!pAction.get("To").equals(ObjectIdOfUser)))) {
                             UserActions_Class myAction = new UserActions_Class();
                             myAction.setTypeOfAction((String) pAction.get("Type"));
                             myAction.setActionBy((String) pAction.get("By"));
