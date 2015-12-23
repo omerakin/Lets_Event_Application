@@ -286,6 +286,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    public void onFriendList (View view) {
+        Intent intent = new Intent(this,FriendListActivity.class);
+        startActivity(intent);
+    }
+
     public void onLogOut (View view) {
         // Direct to log in screen
         LoginManager.getInstance().logOut();

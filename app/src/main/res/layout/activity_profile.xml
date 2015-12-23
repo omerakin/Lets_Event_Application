@@ -112,7 +112,10 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="Friends"
-                        android:id="@+id/Friends" />
+                        android:id="@+id/Friends"
+                        android:onClick="onFriendList"
+                        android:clickable="true"
+                        android:background="#d5d6dd"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
