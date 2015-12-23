@@ -8,10 +8,15 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +28,8 @@ public class Activities_Followed_Activity extends AppCompatActivity {
     ListViewAdapter_Requests adapter;
     List<ParseObject> obTest;
     ArrayList<String> arrayListPicture;
+    String ObjectIdOfUser;
+    ArrayList<String> ObjectIdofFriendList;
 
     private List<UserActions_Class> userActionsFollowed = null;
     private TextView textViewLoading;
@@ -30,6 +37,7 @@ public class Activities_Followed_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activities__followed_);
+        ObjectIdofFriendList = new ArrayList<>();
         //remote datatask async parse
         new  RemoteDataTask().execute();
     }
@@ -49,7 +57,9 @@ public class Activities_Followed_Activity extends AppCompatActivity {
         }
         @Override
         protected Void doInBackground(Void... params){
-            //create arraylist
+
+            readObjectIdOfUser();
+            getFriendList();
             userActionsFollowed = new ArrayList<UserActions_Class>();
             arrayListPicture = new ArrayList<String>();
             try {
@@ -60,32 +70,37 @@ public class Activities_Followed_Activity extends AppCompatActivity {
                 // query.orderByAscending("CommentID");
                 ob = query.find();
                 for (ParseObject pAction : ob) {
-                    UserActions_Class myAction = new UserActions_Class();
-                    myAction.setTypeOfAction((String) pAction.get("Type"));
-                    myAction.setActionBy((String) pAction.get("By"));
-                    myAction.setActionTo((String) pAction.get("To"));
-                    //Pasre object ids transformed to names
+                    for (int j=0; j<ObjectIdofFriendList.size();j++) {
+                        if (ObjectIdofFriendList.get(j).equals(pAction.get("By")==true
+                                ||  ObjectIdofFriendList.get(j).equals(pAction.get("To"))==true)) {
+                            UserActions_Class myAction = new UserActions_Class();
+                            myAction.setTypeOfAction((String) pAction.get("Type"));
+                            myAction.setActionBy((String) pAction.get("By"));
+                            myAction.setActionTo((String) pAction.get("To"));
+                            //Pasre object ids transformed to names
 
-                    ParseObject temp;
-                    ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>("TestAccount");
-                    temp = query2.get(myAction.getActionBy());
-                    String deneme = (String) temp.get("Sex");
-                    arrayListPicture.add((String) temp.get("Sex"));
-                    myAction.setActionBy( temp.get("Name") + " "+ temp.get("Lastname"));
+                            ParseObject temp;
+                            ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>("TestAccount");
+                            temp = query2.get(myAction.getActionBy());
+                            String deneme = (String) temp.get("Sex");
+                            arrayListPicture.add((String) temp.get("Sex"));
+                            myAction.setActionBy( temp.get("Name") + " "+ temp.get("Lastname"));
 
-                    if(myAction.getTypeOfAction().equals("FriendRequest")) {
-                        ParseQuery<ParseObject> query3 = new ParseQuery<ParseObject>("TestAccount");
-                        temp = query3.get(myAction.getActionTo());
-                        myAction.setActionTo(temp.get("Name") + " "+ temp.get("Lastname"));
-                    }else {
-                        ParseQuery<ParseObject> query4 = new ParseQuery<ParseObject>("TestEvent");
-                        temp = query4.get(myAction.getActionTo());
-                        myAction.setActionTo((String)temp.get("Event_Name"));
+                            if(myAction.getTypeOfAction().equals("FriendRequest")) {
+                                ParseQuery<ParseObject> query3 = new ParseQuery<ParseObject>("TestAccount");
+                                temp = query3.get(myAction.getActionTo());
+                                myAction.setActionTo(temp.get("Name") + " "+ temp.get("Lastname"));
+                            }else {
+                                ParseQuery<ParseObject> query4 = new ParseQuery<ParseObject>("TestEvent");
+                                temp = query4.get(myAction.getActionTo());
+                                myAction.setActionTo((String)temp.get("Event_Name"));
+
+                            }
+                            //add to list
+                            userActionsFollowed.add(myAction);
+                        }
 
                     }
-                    //add to list
-                    userActionsFollowed.add(myAction);
-
                 }
             } catch (ParseException e) {
                 Log.e("Error", e.getMessage());
@@ -107,6 +122,62 @@ public class Activities_Followed_Activity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void readObjectIdOfUser() {
+        // Read ObjectId from file
+        FileInputStream fisObjectId = null;
+        try {
+            fisObjectId = openFileInput("ObjectidInfromation.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedInputStream bisObjectId = new BufferedInputStream(fisObjectId);
+        StringBuffer ObjectId = new StringBuffer();
+        try {
+            while (bisObjectId.available() != 0){
+                char next = (char) bisObjectId.read();
+                ObjectId.append(next);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ObjectIdOfUser = ObjectId.toString();
+    }
+
+    private void getFriendList() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequest");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseFriendRequest, ParseException e) {
+                if (e == null) {
+                    int len = parseFriendRequest.size();
+                    //check for sender
+                    for (int i = 0; i < len; i++) {
+                        ParseObject p = parseFriendRequest.get(i);
+                        String pSender = p.getString("Sender");
+                        if (pSender.equals(ObjectIdOfUser)) {
+                            String pReceiver = p.getString("Receiver");
+                            if (!ObjectIdofFriendList.contains(pReceiver) && !pReceiver.equals(pSender)) {
+                                ObjectIdofFriendList.add(pReceiver);
+                            }
+                        }
+                    }
+                    //check for receiver
+                    for (int i = 0; i < len; i++) {
+                        ParseObject p = parseFriendRequest.get(i);
+                        String pReceiver = p.getString("Receiver");
+                        if (pReceiver.equals(ObjectIdOfUser)) {
+                            String pSender = p.getString("Sender");
+                            if (!ObjectIdofFriendList.contains(pSender) && !pReceiver.equals(pSender)) {
+                                ObjectIdofFriendList.add(pSender);
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("Error:..............getFriendList()");
+                }
+            }
+        });
     }
 
     @Override
