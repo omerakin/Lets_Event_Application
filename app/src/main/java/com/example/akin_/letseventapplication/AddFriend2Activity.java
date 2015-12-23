@@ -96,7 +96,7 @@ public class AddFriend2Activity extends AppCompatActivity {
             userAct.put("To", friendId);
             userAct.put("Type", "FriendRequest");
             userAct.saveInBackground();
-            new AlertDialog.Builder(this).setTitle("Warning").setMessage("Friend Successfully added, Now you can see what events they created in Friends Events Tab!").setNeutralButton("Close", null).show();
+            new AlertDialog.Builder(this).setTitle("Let's Event").setMessage("Friend Successfully added, Now you can see what events they created in Friends Events Tab!").setNeutralButton("Close", null).show();
             //ParsePush.subscribeInBackground(friendString);
             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
             installation.addAllUnique("channels", Arrays.asList(friendString));

@@ -1,8 +1,11 @@
 package com.example.akin_.letseventapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -39,6 +42,53 @@ public class Profile_MyEvents_Activity extends AppCompatActivity {
 
         //get Events from parse
         getMyEventsFromParse();
+
+
+
+        // Keys used in Hashmap
+        String[] from = {"flag", "txt", "cur", "pla"};
+
+        // Ids of views in listview_layout
+        int[] to = {R.id.flag, R.id.txt, R.id.cur, R.id.pla};
+
+        // Instantiating an adapter to store each items
+        // R.layout.listview_layout defines the layout of each item
+        SimpleAdapter adapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_layout, from, to);
+
+        // Getting a reference to listview of main.xml layout file
+        final ListView listView = (ListView) findViewById(R.id.listView);
+
+        // Setting the adapter to the listView
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                String parseObj = aList.get(position).get("objectId");
+                String pEDate = aList.get(position).get("cur");
+                String pEName = aList.get(position).get("txt");
+                String pELocation = aList.get(position).get("pla");
+                String pEDescription = aList.get(position).get("eventDescription");
+                String pECreator = aList.get(position).get("eventCreator");
+                String pEType = aList.get(position).get("eventType");
+                String pEPicture = aList.get(position).get("flag");
+
+                Object asd = listView.getItemAtPosition(position);
+                Intent intent = new Intent(Profile_MyEvents_Activity.this, EventDescriptionActivity.class);
+                intent.putExtra("name", Integer.toString(position));
+                intent.putExtra("pEDate", pEDate);
+                intent.putExtra("pEName", pEName);
+                intent.putExtra("pELocation", pELocation);
+                intent.putExtra("pEDescription", pEDescription);
+                intent.putExtra("pECreator", pECreator);
+                intent.putExtra("pEPicture", pEPicture);
+                intent.putExtra("pEType", pEType);
+                intent.putExtra("parseObjectId", parseObj);
+                startActivity(intent);
+
+            }
+
+        });
     }
 
     private void readObjectIdFromFile() {
@@ -85,6 +135,10 @@ public class Profile_MyEvents_Activity extends AppCompatActivity {
                             String pName = p.getString("Event_Name");
                             String pLocation = p.getString("Location");
                             String pDate = p.getString("Start_Date") + "  " + p.getString("Start_Time");
+                            String pEventObjectId = p.getObjectId();
+                            String pEventDescription = p.getString("Description");
+                            String pEventCreator = p.getString("Event_Creater");
+                            String pEventType = p.getString("Category_Name");
                             String pPicture = Integer.toString(R.drawable.other);
 
                             // set the picture of event
@@ -154,7 +208,7 @@ public class Profile_MyEvents_Activity extends AppCompatActivity {
                                 pPicture = Integer.toString(R.drawable.other);
                             }
                             //set other adjustments
-                            afterQueryProcessing(pName, pLocation, pDate, pPicture);
+                            afterQueryProcessing(pName, pLocation, pDate, pPicture, pEventObjectId, pEventDescription, pEventCreator, pEventType);
                         }
                     }
                 } else {
@@ -165,8 +219,8 @@ public class Profile_MyEvents_Activity extends AppCompatActivity {
         });
     }
 
-    private void afterQueryProcessing(String pname, String plocation, String pdate, String ppicture) {
-
+    private void afterQueryProcessing(String pname, String plocation, String pdate, String ppicture, String pEventObjectId,
+                                      String pEventDescription, String pEventCreator, String pEventType) {
         // You can access m2Status here reliably,
         // assuming you only call this method
         // as shown above, but you should still
@@ -176,6 +230,12 @@ public class Profile_MyEvents_Activity extends AppCompatActivity {
         hm.put("cur","Date : " + pdate);
         hm.put("flag", ppicture );
         hm.put("pla", "Location : " + plocation);
+
+
+        hm.put("eventDescription", pEventDescription);
+        hm.put("eventCreator", pEventCreator);
+        hm.put("eventType", pEventType);
+        hm.put("objectId", pEventObjectId);
         aList.add(hm);
 // Keys used in Hashmap
         String[] from = {"flag", "txt", "cur", "pla"};
