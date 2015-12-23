@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -283,6 +284,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     public void onLogOut (View view) {
         // Direct to log in screen
+        LoginManager.getInstance().logOut();
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
 
