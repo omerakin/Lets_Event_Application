@@ -109,7 +109,7 @@ public class AddFriend2Activity extends AppCompatActivity {
             }else{
                 channelPush = friendString;
             }
-
+            findMyName();
             //ParsePush.subscribeInBackground(friendString);
             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
             installation.addAllUnique("channels", Arrays.asList(channelPush));
