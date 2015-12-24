@@ -29,13 +29,18 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -48,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
     private Boolean saveLogin;
     public  boolean isPasswordSameAsParse;
     public String passwordFromParse;
+    public String ObjectIdOfUser;
+    public ArrayList<String> ObjectIdofFriendList;
 
     private CallbackManager callbackManager;
     private TextView info;
@@ -67,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        ObjectIdofFriendList = new ArrayList<>();
         //facebook
         callbackManager = CallbackManager.Factory.create();
         boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
@@ -215,6 +223,7 @@ public class LoginActivity extends AppCompatActivity {
         // as shown above, but you should still
         // use defensive programming
         if(passwordET.equals(passwordFromParse)){
+            runFriendQuery();
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("Username", usernameET);
             intent.putExtra("Password", passwordET);
@@ -280,7 +289,7 @@ public class LoginActivity extends AppCompatActivity {
                         String pPassword = p.getString("Password");
                         String pObjectId;
 
-                        if(pEmail.equals(usernameInformation) && pPassword.equals(passwordInformation)){
+                        if (pEmail.equals(usernameInformation) && pPassword.equals(passwordInformation)) {
                             pObjectId = p.getObjectId();
                             System.out.println("pObjectId........." + pObjectId + "............" + pObjectId);
                             FileOutputStream fosObjectid = null;
@@ -338,6 +347,112 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+    }
+
+
+    private void runFriendQuery() {
+        readObjectIdOfUser();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("FriendRequest");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> parseFriendRequest, ParseException e) {
+                if (e == null) {
+
+                    int len = parseFriendRequest.size();
+                    //check for sender
+                    for (int i = 0; i < len; i++) {
+                        ParseObject p = parseFriendRequest.get(i);
+                        String pSender = p.getString("Sender");
+                        if (pSender.equals(ObjectIdOfUser)) {
+                            String pReceiver = p.getString("Receiver");
+                            if (!ObjectIdofFriendList.contains(pReceiver)
+                                    && !pSender.equals(pReceiver)
+                                    && !pReceiver.equals(ObjectIdOfUser)) {
+                                ObjectIdofFriendList.add(pReceiver);
+                            }
+                        }
+                    }
+                    //check for receiver
+                    for (int i = 0; i < len; i++) {
+                        ParseObject p = parseFriendRequest.get(i);
+                        String pReceiver = p.getString("Receiver");
+                        if (pReceiver.equals(ObjectIdOfUser)) {
+                            String pSender = p.getString("Sender");
+                            if (!ObjectIdofFriendList.contains(pSender)
+                                    && !pReceiver.equals(pSender)
+                                    && !pSender.equals(ObjectIdOfUser)) {
+                                ObjectIdofFriendList.add(pSender);
+                            }
+                        }
+                    }
+
+                        afterFriendQueryProcessing(ObjectIdofFriendList);
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+
+                }
+            }
+        });
+
+    }
+
+    private void afterFriendQueryProcessing(ArrayList<String> ObjectIdofFriendList) {
+        int size = ObjectIdofFriendList.size();
+        List<String> clearList = new ArrayList<String>();
+        String tempObjId;
+        ParseObject tempParseObj;
+        String emailOfUser;
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("channels", clearList);
+        for(int i=0; i<size; i++){
+            tempObjId = ObjectIdofFriendList.get(i);
+            try {
+                ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("TestAccount");
+                tempParseObj = query.get(tempObjId);
+                emailOfUser = tempParseObj.getString("Email");
+
+                String tempStr = emailOfUser;
+                String channelPush;
+                int checkMinus = tempStr.indexOf("@");
+                if (checkMinus != -1) {
+                    channelPush = tempStr.substring(0, checkMinus);
+                }else{
+                    channelPush = emailOfUser;
+                }
+                installation.addAllUnique("channels", Arrays.asList(channelPush));
+                installation.saveInBackground();
+                /*ParsePush push = new ParsePush();
+                push.setChannel(channelPush);
+                push.setMessage("A added " + channelPush);
+                push.sendInBackground();*/
+
+
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    private void readObjectIdOfUser() {
+        // Read ObjectId from file
+        FileInputStream fisObjectId = null;
+        try {
+            fisObjectId = openFileInput("ObjectidInfromation.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedInputStream bisObjectId = new BufferedInputStream(fisObjectId);
+        StringBuffer ObjectId = new StringBuffer();
+        try {
+            while (bisObjectId.available() != 0){
+                char next = (char) bisObjectId.read();
+                ObjectId.append(next);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ObjectIdOfUser = ObjectId.toString();
     }
 
 }
