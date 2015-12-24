@@ -29,6 +29,8 @@ public class AddFriend2Activity extends AppCompatActivity {
     String friendString;
     String friendObjectId;
     String ObjectIdFromFile;
+    String userName;
+    String friendName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,7 @@ public class AddFriend2Activity extends AppCompatActivity {
                     // out a way to handle that scenario
                 } else {
                     friendObjectId = object.getObjectId();
+                    friendName = object.get("Name") +" "+object.get("Lastname");
                     Log.d("id", "Retrieved the object.");
                     afterQueryProcessing(ObjectIdFromFile,friendObjectId);
                 }
@@ -113,7 +116,7 @@ public class AddFriend2Activity extends AppCompatActivity {
             installation.saveInBackground();
             ParsePush push = new ParsePush();
             push.setChannel(channelPush);
-            push.setMessage("A added " + channelPush);
+            push.setMessage(userName + " added " + friendName);
             push.sendInBackground();
 
         } else {
@@ -122,6 +125,16 @@ public class AddFriend2Activity extends AppCompatActivity {
 
 
 }
+    private void findMyName() {
+        ParseObject temp ;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("TestAccount");
+        try {
+            temp = query.get(ObjectIdFromFile);
+            userName = temp.get("Name")+ " "+ temp.get("Name");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void onAddFriend(View view){
         friendString = String.valueOf(addFriendEditText.getText());
