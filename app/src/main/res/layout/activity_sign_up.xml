@@ -31,7 +31,7 @@
                         android:layout_height="50sp"
                         android:id="@+id/email"
                         android:layout_gravity="center_horizontal"
-                        android:hint="E-mail"
+                        android:hint="E-mail (Username)"
                         android:background="#80000000"
                         android:textColor="#ffffff"
                         android:textColorHint="#ffffff" />
