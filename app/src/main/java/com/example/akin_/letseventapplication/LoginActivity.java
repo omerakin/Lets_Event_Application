@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }).executeAsync();
 
-
+                runFriendQuery();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
 
