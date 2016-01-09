@@ -163,8 +163,10 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void onSearchEvent (View view) {
-
-        Intent intent = new Intent(this, MainActivity.class);
+        String TypeName = spinnerCategory.getSelectedItem().toString();
+        Intent intent = new Intent(this, SearchList_Activity.class);
+        intent.putExtra("name", String.valueOf(event_name.getText()));
+        intent.putExtra("cat", TypeName);
         startActivity(intent);
     }
 }
